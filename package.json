@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "elm",
-    "build": "elm make src/PhotoGroove.elm --output app.js",
+    "build": "elm make src/PhotoGroove.elm --optimize --output app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
