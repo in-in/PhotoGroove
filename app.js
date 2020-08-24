@@ -519,11 +519,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.K.A === region.R.A)
+	if (region.N.A === region.S.A)
 	{
-		return 'on line ' + region.K.A;
+		return 'on line ' + region.N.A;
 	}
-	return 'on lines ' + region.K.A + ' through ' + region.R.A;
+	return 'on lines ' + region.N.A + ' through ' + region.S.A;
 }
 
 
@@ -2705,8 +2705,8 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
 		o: func(record.o),
-		L: record.L,
-		I: record.I
+		O: record.O,
+		L: record.L
 	}
 });
 
@@ -2975,10 +2975,10 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 
 		var value = result.a;
 		var message = !tag ? value : tag < 3 ? value.a : value.o;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.L;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.O;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.I) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.L) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3968,7 +3968,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		impl.aG,
 		impl.aE,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.J && impl.J(sendToApp)
+			var divertHrefToApp = impl.M && impl.M(sendToApp)
 			var view = impl.aH;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
@@ -4043,7 +4043,7 @@ function _Browser_application(impl)
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		J: function(sendToApp)
+		M: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4060,7 +4060,7 @@ function _Browser_application(impl)
 					sendToApp(onUrlRequest(
 						(next
 							&& curr.ae === next.ae
-							&& curr.V === next.V
+							&& curr.W === next.W
 							&& curr.ab.a === next.ab.a
 						)
 							? $elm$browser$Browser$Internal(next)
@@ -4237,7 +4237,7 @@ function _Browser_getViewport()
 			an: _Browser_window.pageXOffset,
 			ao: _Browser_window.pageYOffset,
 			am: _Browser_doc.documentElement.clientWidth,
-			U: _Browser_doc.documentElement.clientHeight
+			V: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4248,7 +4248,7 @@ function _Browser_getScene()
 	var elem = _Browser_doc.documentElement;
 	return {
 		am: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		U: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		V: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4273,13 +4273,13 @@ function _Browser_getViewportOf(id)
 		return {
 			ai: {
 				am: node.scrollWidth,
-				U: node.scrollHeight
+				V: node.scrollHeight
 			},
 			al: {
 				an: node.scrollLeft,
 				ao: node.scrollTop,
 				am: node.clientWidth,
-				U: node.clientHeight
+				V: node.clientHeight
 			}
 		};
 	});
@@ -4314,13 +4314,13 @@ function _Browser_getElement(id)
 				an: x,
 				ao: y,
 				am: _Browser_doc.documentElement.clientWidth,
-				U: _Browser_doc.documentElement.clientHeight
+				V: _Browser_doc.documentElement.clientHeight
 			},
 			au: {
 				an: x + rect.left,
 				ao: y + rect.top,
 				am: rect.width,
-				U: rect.height
+				V: rect.height
 			}
 		};
 	});
@@ -4436,13 +4436,13 @@ var $elm$core$Basics$EQ = 1;
 var $elm$core$Basics$GT = 2;
 var $elm$core$Basics$LT = 0;
 var $author$project$PhotoGroove$initialModel = {
-	_: _List_fromArray(
+	G: _List_fromArray(
 		[
-			{x: '1.jpeg'},
-			{x: '2.jpeg'},
-			{x: '3.jpeg'}
+			{u: '1.jpeg'},
+			{u: '2.jpeg'},
+			{u: '3.jpeg'}
 		]),
-	F: '1.jpeg'
+	B: '1.jpeg'
 };
 var $elm$core$Result$Err = function (a) {
 	return {$: 1, a: a};
@@ -4868,7 +4868,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {T: fragment, V: host, Z: path, ab: port_, ae: protocol, af: query};
+		return {U: fragment, W: host, _: path, ab: port_, ae: protocol, af: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5170,9 +5170,9 @@ var $elm$browser$Browser$sandbox = function (impl) {
 };
 var $author$project$PhotoGroove$update = F2(
 	function (msg, model) {
-		return (msg.Q === 'ClickedPhoto') ? _Utils_update(
+		return (msg.I === 'ClickedPhoto') ? _Utils_update(
 			model,
-			{F: msg.O}) : model;
+			{B: msg.H}) : model;
 	});
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
@@ -5246,16 +5246,16 @@ var $author$project$PhotoGroove$viewThumbnail = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$src(
-					_Utils_ap($author$project$PhotoGroove$urlPrefix, thumb.x)),
+					_Utils_ap($author$project$PhotoGroove$urlPrefix, thumb.u)),
 					$elm$html$Html$Attributes$classList(
 					_List_fromArray(
 						[
 							_Utils_Tuple2(
 							'selected',
-							_Utils_eq(selectedUrl, thumb.x))
+							_Utils_eq(selectedUrl, thumb.u))
 						])),
 					$elm$html$Html$Events$onClick(
-					{O: thumb.x, Q: 'ClickedPhoto'})
+					{H: thumb.u, I: 'ClickedPhoto'})
 				]),
 			_List_Nil);
 	});
@@ -5284,14 +5284,14 @@ var $author$project$PhotoGroove$view = function (model) {
 					]),
 				A2(
 					$elm$core$List$map,
-					$author$project$PhotoGroove$viewThumbnail(model.F),
-					model._)),
+					$author$project$PhotoGroove$viewThumbnail(model.B),
+					model.G)),
 				A2(
 				$elm$html$Html$img,
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$class('large'),
-						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('large/' + model.F))
+						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('large/' + model.B))
 					]),
 				_List_Nil)
 			]));
