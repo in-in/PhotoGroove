@@ -519,11 +519,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.N.A === region.S.A)
+	if (region.N.B === region.S.B)
 	{
-		return 'on line ' + region.N.A;
+		return 'on line ' + region.N.B;
 	}
-	return 'on lines ' + region.N.A + ' through ' + region.S.A;
+	return 'on lines ' + region.N.B + ' through ' + region.S.B;
 }
 
 
@@ -4436,13 +4436,13 @@ var $elm$core$Basics$EQ = 1;
 var $elm$core$Basics$GT = 2;
 var $elm$core$Basics$LT = 0;
 var $author$project$PhotoGroove$initialModel = {
-	G: _List_fromArray(
+	K: _List_fromArray(
 		[
 			{u: '1.jpeg'},
 			{u: '2.jpeg'},
 			{u: '3.jpeg'}
 		]),
-	B: '1.jpeg'
+	x: '1.jpeg'
 };
 var $elm$core$Result$Err = function (a) {
 	return {$: 1, a: a};
@@ -5170,10 +5170,21 @@ var $elm$browser$Browser$sandbox = function (impl) {
 };
 var $author$project$PhotoGroove$update = F2(
 	function (msg, model) {
-		return (msg.I === 'ClickedPhoto') ? _Utils_update(
-			model,
-			{B: msg.H}) : model;
+		var _v0 = msg.H;
+		switch (_v0) {
+			case 'ClickedPhoto':
+				return _Utils_update(
+					model,
+					{x: msg.G});
+			case 'ClickedSurpriseMe':
+				return _Utils_update(
+					model,
+					{x: '2.jpeg'});
+			default:
+				return model;
+		}
 	});
+var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -5188,6 +5199,23 @@ var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$hr = _VirtualDom_node('hr');
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$html$Html$img = _VirtualDom_node('img');
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 0, a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
@@ -5222,23 +5250,6 @@ var $elm$html$Html$Attributes$classList = function (classes) {
 				$elm$core$Tuple$first,
 				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
 };
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 0, a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
-};
 var $author$project$PhotoGroove$viewThumbnail = F2(
 	function (selectedUrl, thumb) {
 		return A2(
@@ -5255,7 +5266,7 @@ var $author$project$PhotoGroove$viewThumbnail = F2(
 							_Utils_eq(selectedUrl, thumb.u))
 						])),
 					$elm$html$Html$Events$onClick(
-					{H: thumb.u, I: 'ClickedPhoto'})
+					{G: thumb.u, H: 'ClickedPhoto'})
 				]),
 			_List_Nil);
 	});
@@ -5275,6 +5286,17 @@ var $author$project$PhotoGroove$view = function (model) {
 					[
 						$elm$html$Html$text('Photo Groove')
 					])),
+				A2(
+				$elm$html$Html$button,
+				_List_fromArray(
+					[
+						$elm$html$Html$Events$onClick(
+						{G: '', H: 'ClickedSurpriseMe'})
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Surprise Me!')
+					])),
 				A2($elm$html$Html$hr, _List_Nil, _List_Nil),
 				A2(
 				$elm$html$Html$div,
@@ -5284,14 +5306,14 @@ var $author$project$PhotoGroove$view = function (model) {
 					]),
 				A2(
 					$elm$core$List$map,
-					$author$project$PhotoGroove$viewThumbnail(model.B),
-					model.G)),
+					$author$project$PhotoGroove$viewThumbnail(model.x),
+					model.K)),
 				A2(
 				$elm$html$Html$img,
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$class('large'),
-						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('large/' + model.B))
+						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('large/' + model.x))
 					]),
 				_List_Nil)
 			]));
