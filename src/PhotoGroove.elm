@@ -38,6 +38,7 @@ view model =
             (List.map (viewThumbnail model.selectedUrl) model.photos)
         , img
             [ class "large"
+            , alt ""
             , src (urlPrefix ++ "large/" ++ model.selectedUrl)
             ]
             []
@@ -48,6 +49,7 @@ viewThumbnail : String -> Photo -> Html Msg
 viewThumbnail selectedUrl thumb =
     img
         [ src (urlPrefix ++ thumb.url)
+        , alt ""
         , classList [ ( "selected", selectedUrl == thumb.url ) ]
         , onClick (ClickedPhoto thumb.url)
         ]

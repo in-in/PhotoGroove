@@ -5192,7 +5192,6 @@ var $author$project$PhotoGroove$update = F2(
 var $author$project$PhotoGroove$ClickedSurpriseMe = {$: 2};
 var $author$project$PhotoGroove$Large = 2;
 var $author$project$PhotoGroove$Small = 0;
-var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -5201,6 +5200,8 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			$elm$json$Json$Encode$string(string));
 	});
+var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
+var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
@@ -5317,6 +5318,7 @@ var $author$project$PhotoGroove$viewThumbnail = F2(
 				[
 					$elm$html$Html$Attributes$src(
 					_Utils_ap($author$project$PhotoGroove$urlPrefix, thumb.r)),
+					$elm$html$Html$Attributes$alt(''),
 					$elm$html$Html$Attributes$classList(
 					_List_fromArray(
 						[
@@ -5391,6 +5393,7 @@ var $author$project$PhotoGroove$view = function (model) {
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$class('large'),
+						$elm$html$Html$Attributes$alt(''),
 						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('large/' + model.x))
 					]),
 				_List_Nil)
