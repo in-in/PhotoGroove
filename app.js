@@ -600,11 +600,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.M.B === region.R.B)
+	if (region.L.A === region.Q.A)
 	{
-		return 'on line ' + region.M.B;
+		return 'on line ' + region.L.A;
 	}
-	return 'on lines ' + region.M.B + ' through ' + region.R.B;
+	return 'on lines ' + region.L.A + ' through ' + region.Q.A;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.ax,
-		impl.aF,
-		impl.aD,
+		impl.aw,
+		impl.aE,
+		impl.aC,
 		function() { return function() {} }
 	);
 });
@@ -2705,8 +2705,8 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
 		o: func(record.o),
-		N: record.N,
-		K: record.K
+		M: record.M,
+		J: record.J
 	}
 });
 
@@ -2975,10 +2975,10 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 
 		var value = result.a;
 		var message = !tag ? value : tag < 3 ? value.a : value.o;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.N;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.M;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.K) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.J) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3928,11 +3928,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.ax,
-		impl.aF,
-		impl.aD,
+		impl.aw,
+		impl.aE,
+		impl.aC,
 		function(sendToApp, initialModel) {
-			var view = impl.aG;
+			var view = impl.aF;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3964,12 +3964,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.ax,
-		impl.aF,
-		impl.aD,
+		impl.aw,
+		impl.aE,
+		impl.aC,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.L && impl.L(sendToApp)
-			var view = impl.aG;
+			var divertHrefToApp = impl.K && impl.K(sendToApp)
+			var view = impl.aF;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3977,12 +3977,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aq);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ap);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.aE) && (_VirtualDom_doc.title = title = doc.aE);
+				(title !== doc.aD) && (_VirtualDom_doc.title = title = doc.aD);
 			});
 		}
 	);
@@ -4038,12 +4038,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.az;
-	var onUrlRequest = impl.aA;
+	var onUrlChange = impl.ay;
+	var onUrlRequest = impl.az;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		L: function(sendToApp)
+		K: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.ad === next.ad
-							&& curr.V === next.V
-							&& curr.aa.a === next.aa.a
+							&& curr.ac === next.ac
+							&& curr.U === next.U
+							&& curr._.a === next._.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4069,13 +4069,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		ax: function(flags)
+		aw: function(flags)
 		{
-			return A3(impl.ax, flags, _Browser_getUrl(), key);
+			return A3(impl.aw, flags, _Browser_getUrl(), key);
 		},
-		aG: impl.aG,
 		aF: impl.aF,
-		aD: impl.aD
+		aE: impl.aE,
+		aC: impl.aC
 	});
 }
 
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { av: 'hidden', ar: 'visibilitychange' }
+		? { au: 'hidden', aq: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { av: 'mozHidden', ar: 'mozvisibilitychange' }
+		? { au: 'mozHidden', aq: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { av: 'msHidden', ar: 'msvisibilitychange' }
+		? { au: 'msHidden', aq: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { av: 'webkitHidden', ar: 'webkitvisibilitychange' }
-		: { av: 'hidden', ar: 'visibilitychange' };
+		? { au: 'webkitHidden', aq: 'webkitvisibilitychange' }
+		: { au: 'hidden', aq: 'visibilitychange' };
 }
 
 
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		ah: _Browser_getScene(),
-		ak: {
-			am: _Browser_window.pageXOffset,
-			an: _Browser_window.pageYOffset,
-			al: _Browser_doc.documentElement.clientWidth,
-			U: _Browser_doc.documentElement.clientHeight
+		ag: _Browser_getScene(),
+		aj: {
+			al: _Browser_window.pageXOffset,
+			am: _Browser_window.pageYOffset,
+			ak: _Browser_doc.documentElement.clientWidth,
+			T: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4247,8 +4247,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		al: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		U: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		ak: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		T: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			ah: {
-				al: node.scrollWidth,
-				U: node.scrollHeight
+			ag: {
+				ak: node.scrollWidth,
+				T: node.scrollHeight
 			},
-			ak: {
-				am: node.scrollLeft,
-				an: node.scrollTop,
-				al: node.clientWidth,
-				U: node.clientHeight
+			aj: {
+				al: node.scrollLeft,
+				am: node.scrollTop,
+				ak: node.clientWidth,
+				T: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			ah: _Browser_getScene(),
-			ak: {
-				am: x,
-				an: y,
-				al: _Browser_doc.documentElement.clientWidth,
-				U: _Browser_doc.documentElement.clientHeight
+			ag: _Browser_getScene(),
+			aj: {
+				al: x,
+				am: y,
+				ak: _Browser_doc.documentElement.clientWidth,
+				T: _Browser_doc.documentElement.clientHeight
 			},
-			at: {
-				am: x + rect.left,
-				an: y + rect.top,
-				al: rect.width,
-				U: rect.height
+			as: {
+				al: x + rect.left,
+				am: y + rect.top,
+				ak: rect.width,
+				T: rect.height
 			}
 		};
 	});
@@ -4942,7 +4942,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {T: fragment, V: host, Z: path, aa: port_, ad: protocol, ae: query};
+		return {S: fragment, U: host, Y: path, _: port_, ac: protocol, ad: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5221,22 +5221,14 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$element = _Browser_element;
+var $author$project$PhotoGroove$Loading = {$: 0};
 var $author$project$PhotoGroove$Medium = 1;
-var $author$project$PhotoGroove$initialModel = {
-	G: 1,
-	H: _List_fromArray(
-		[
-			{r: '1.jpeg'},
-			{r: '2.jpeg'},
-			{r: '3.jpeg'}
-		]),
-	x: '1.jpeg'
-};
+var $author$project$PhotoGroove$initialModel = {G: 1, q: $author$project$PhotoGroove$Loading};
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$PhotoGroove$GotSelectedIndex = function (a) {
+var $author$project$PhotoGroove$GotRandomPhoto = function (a) {
 	return {$: 1, a: a};
 };
 var $elm$random$Random$Generate = $elm$core$Basics$identity;
@@ -5337,140 +5329,109 @@ var $elm$random$Random$generate = F2(
 		return $elm$random$Random$command(
 			A2($elm$random$Random$map, tagger, generator));
 	});
-var $elm$core$Bitwise$and = _Bitwise_and;
-var $elm$core$Array$bitMask = 4294967295 >>> (32 - $elm$core$Array$shiftStep);
-var $elm$core$Basics$ge = _Utils_ge;
-var $elm$core$Elm$JsArray$unsafeGet = _JsArray_unsafeGet;
-var $elm$core$Array$getHelp = F3(
-	function (shift, index, tree) {
-		getHelp:
-		while (true) {
-			var pos = $elm$core$Array$bitMask & (index >>> shift);
-			var _v0 = A2($elm$core$Elm$JsArray$unsafeGet, pos, tree);
-			if (!_v0.$) {
-				var subTree = _v0.a;
-				var $temp$shift = shift - $elm$core$Array$shiftStep,
-					$temp$index = index,
-					$temp$tree = subTree;
-				shift = $temp$shift;
-				index = $temp$index;
-				tree = $temp$tree;
-				continue getHelp;
-			} else {
-				var values = _v0.a;
-				return A2($elm$core$Elm$JsArray$unsafeGet, $elm$core$Array$bitMask & index, values);
-			}
+var $elm$core$Tuple$pair = F2(
+	function (a, b) {
+		return _Utils_Tuple2(a, b);
+	});
+var $author$project$PhotoGroove$Loaded = F2(
+	function (a, b) {
+		return {$: 1, a: a, b: b};
+	});
+var $author$project$PhotoGroove$selectUrl = F2(
+	function (url, status) {
+		switch (status.$) {
+			case 1:
+				var photos = status.a;
+				return A2($author$project$PhotoGroove$Loaded, photos, url);
+			case 0:
+				return status;
+			default:
+				var errorMessages = status.a;
+				return status;
 		}
 	});
-var $elm$core$Bitwise$shiftLeftBy = _Bitwise_shiftLeftBy;
-var $elm$core$Array$tailIndex = function (len) {
-	return (len >>> 5) << 5;
-};
-var $elm$core$Array$get = F2(
-	function (index, _v0) {
-		var len = _v0.a;
-		var startShift = _v0.b;
-		var tree = _v0.c;
-		var tail = _v0.d;
-		return ((index < 0) || (_Utils_cmp(index, len) > -1)) ? $elm$core$Maybe$Nothing : ((_Utils_cmp(
-			index,
-			$elm$core$Array$tailIndex(len)) > -1) ? $elm$core$Maybe$Just(
-			A2($elm$core$Elm$JsArray$unsafeGet, $elm$core$Array$bitMask & index, tail)) : $elm$core$Maybe$Just(
-			A3($elm$core$Array$getHelp, startShift, index, tree)));
-	});
-var $elm$core$Array$fromListHelp = F3(
-	function (list, nodeList, nodeListSize) {
-		fromListHelp:
-		while (true) {
-			var _v0 = A2($elm$core$Elm$JsArray$initializeFromList, $elm$core$Array$branchFactor, list);
-			var jsArray = _v0.a;
-			var remainingItems = _v0.b;
-			if (_Utils_cmp(
-				$elm$core$Elm$JsArray$length(jsArray),
-				$elm$core$Array$branchFactor) < 0) {
-				return A2(
-					$elm$core$Array$builderToArray,
-					true,
-					{d: nodeList, a: nodeListSize, c: jsArray});
-			} else {
-				var $temp$list = remainingItems,
-					$temp$nodeList = A2(
-					$elm$core$List$cons,
-					$elm$core$Array$Leaf(jsArray),
-					nodeList),
-					$temp$nodeListSize = nodeListSize + 1;
-				list = $temp$list;
-				nodeList = $temp$nodeList;
-				nodeListSize = $temp$nodeListSize;
-				continue fromListHelp;
-			}
-		}
-	});
-var $elm$core$Array$fromList = function (list) {
-	if (!list.b) {
-		return $elm$core$Array$empty;
-	} else {
-		return A3($elm$core$Array$fromListHelp, list, _List_Nil, 0);
-	}
-};
-var $author$project$PhotoGroove$photoArray = $elm$core$Array$fromList($author$project$PhotoGroove$initialModel.H);
-var $author$project$PhotoGroove$getPhotoUrl = function (index) {
-	var _v0 = A2($elm$core$Array$get, index, $author$project$PhotoGroove$photoArray);
-	if (!_v0.$) {
-		var photo = _v0.a;
-		return photo.r;
-	} else {
-		return '';
-	}
+var $elm$random$Random$addOne = function (value) {
+	return _Utils_Tuple2(1, value);
 };
 var $elm$core$Basics$negate = function (n) {
 	return -n;
 };
+var $elm$core$Basics$abs = function (n) {
+	return (n < 0) ? (-n) : n;
+};
+var $elm$core$Bitwise$and = _Bitwise_and;
 var $elm$core$Bitwise$xor = _Bitwise_xor;
 var $elm$random$Random$peel = function (_v0) {
 	var state = _v0.a;
 	var word = (state ^ (state >>> ((state >>> 28) + 4))) * 277803737;
 	return ((word >>> 22) ^ word) >>> 0;
 };
-var $elm$random$Random$int = F2(
+var $elm$random$Random$float = F2(
 	function (a, b) {
 		return function (seed0) {
-			var _v0 = (_Utils_cmp(a, b) < 0) ? _Utils_Tuple2(a, b) : _Utils_Tuple2(b, a);
-			var lo = _v0.a;
-			var hi = _v0.b;
-			var range = (hi - lo) + 1;
-			if (!((range - 1) & range)) {
-				return _Utils_Tuple2(
-					(((range - 1) & $elm$random$Random$peel(seed0)) >>> 0) + lo,
-					$elm$random$Random$next(seed0));
-			} else {
-				var threshhold = (((-range) >>> 0) % range) >>> 0;
-				var accountForBias = function (seed) {
-					accountForBias:
-					while (true) {
-						var x = $elm$random$Random$peel(seed);
-						var seedN = $elm$random$Random$next(seed);
-						if (_Utils_cmp(x, threshhold) < 0) {
-							var $temp$seed = seedN;
-							seed = $temp$seed;
-							continue accountForBias;
-						} else {
-							return _Utils_Tuple2((x % range) + lo, seedN);
-						}
-					}
-				};
-				return accountForBias(seed0);
-			}
+			var seed1 = $elm$random$Random$next(seed0);
+			var range = $elm$core$Basics$abs(b - a);
+			var n1 = $elm$random$Random$peel(seed1);
+			var n0 = $elm$random$Random$peel(seed0);
+			var lo = (134217727 & n1) * 1.0;
+			var hi = (67108863 & n0) * 1.0;
+			var val = ((hi * 134217728.0) + lo) / 9007199254740992.0;
+			var scaled = (val * range) + a;
+			return _Utils_Tuple2(
+				scaled,
+				$elm$random$Random$next(seed1));
 		};
 	});
-var $elm$core$Array$length = function (_v0) {
-	var len = _v0.a;
-	return len;
+var $elm$random$Random$getByWeight = F3(
+	function (_v0, others, countdown) {
+		getByWeight:
+		while (true) {
+			var weight = _v0.a;
+			var value = _v0.b;
+			if (!others.b) {
+				return value;
+			} else {
+				var second = others.a;
+				var otherOthers = others.b;
+				if (_Utils_cmp(
+					countdown,
+					$elm$core$Basics$abs(weight)) < 1) {
+					return value;
+				} else {
+					var $temp$_v0 = second,
+						$temp$others = otherOthers,
+						$temp$countdown = countdown - $elm$core$Basics$abs(weight);
+					_v0 = $temp$_v0;
+					others = $temp$others;
+					countdown = $temp$countdown;
+					continue getByWeight;
+				}
+			}
+		}
+	});
+var $elm$core$List$sum = function (numbers) {
+	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
 };
-var $author$project$PhotoGroove$randomPhotoPicker = A2(
-	$elm$random$Random$int,
-	0,
-	$elm$core$Array$length($author$project$PhotoGroove$photoArray) - 1);
+var $elm$random$Random$weighted = F2(
+	function (first, others) {
+		var normalize = function (_v0) {
+			var weight = _v0.a;
+			return $elm$core$Basics$abs(weight);
+		};
+		var total = normalize(first) + $elm$core$List$sum(
+			A2($elm$core$List$map, normalize, others));
+		return A2(
+			$elm$random$Random$map,
+			A2($elm$random$Random$getByWeight, first, others),
+			A2($elm$random$Random$float, 0, total));
+	});
+var $elm$random$Random$uniform = F2(
+	function (value, valueList) {
+		return A2(
+			$elm$random$Random$weighted,
+			$elm$random$Random$addOne(value),
+			A2($elm$core$List$map, $elm$random$Random$addOne, valueList));
+	});
 var $author$project$PhotoGroove$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -5479,15 +5440,17 @@ var $author$project$PhotoGroove$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{x: url}),
+						{
+							q: A2($author$project$PhotoGroove$selectUrl, url, model.q)
+						}),
 					$elm$core$Platform$Cmd$none);
 			case 1:
-				var index = msg.a;
+				var photo = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							x: $author$project$PhotoGroove$getPhotoUrl(index)
+							q: A2($author$project$PhotoGroove$selectUrl, photo.F, model.q)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 2:
@@ -5498,14 +5461,31 @@ var $author$project$PhotoGroove$update = F2(
 						{G: size}),
 					$elm$core$Platform$Cmd$none);
 			default:
-				return _Utils_Tuple2(
-					model,
-					A2($elm$random$Random$generate, $author$project$PhotoGroove$GotSelectedIndex, $author$project$PhotoGroove$randomPhotoPicker));
+				var _v1 = model.q;
+				switch (_v1.$) {
+					case 1:
+						if (_v1.a.b) {
+							var _v2 = _v1.a;
+							var firstPhoto = _v2.a;
+							var otherPhotos = _v2.b;
+							return A2(
+								$elm$core$Tuple$pair,
+								model,
+								A2(
+									$elm$random$Random$generate,
+									$author$project$PhotoGroove$GotRandomPhoto,
+									A2($elm$random$Random$uniform, firstPhoto, otherPhotos)));
+						} else {
+							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+						}
+					case 0:
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					default:
+						var errorMessage = _v1.a;
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
 		}
 	});
-var $author$project$PhotoGroove$ClickedSurpriseMe = {$: 3};
-var $author$project$PhotoGroove$Large = 2;
-var $author$project$PhotoGroove$Small = 0;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -5514,10 +5494,15 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			$elm$json$Json$Encode$string(string));
 	});
-var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
-var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$PhotoGroove$ClickedSurpriseMe = {$: 3};
+var $author$project$PhotoGroove$Large = 2;
+var $author$project$PhotoGroove$Small = 0;
+var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
+var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$hr = _VirtualDom_node('hr');
@@ -5556,8 +5541,6 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$PhotoGroove$urlPrefix = 'https://elm-in-action.com/';
 var $author$project$PhotoGroove$ClickedSize = function (a) {
 	return {$: 2, a: a};
@@ -5631,28 +5614,23 @@ var $author$project$PhotoGroove$viewThumbnail = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$src(
-					_Utils_ap($author$project$PhotoGroove$urlPrefix, thumb.r)),
+					_Utils_ap($author$project$PhotoGroove$urlPrefix, thumb.F)),
 					$elm$html$Html$Attributes$alt(''),
 					$elm$html$Html$Attributes$classList(
 					_List_fromArray(
 						[
 							_Utils_Tuple2(
 							'selected',
-							_Utils_eq(selectedUrl, thumb.r))
+							_Utils_eq(selectedUrl, thumb.F))
 						])),
 					$elm$html$Html$Events$onClick(
-					$author$project$PhotoGroove$ClickedPhoto(thumb.r))
+					$author$project$PhotoGroove$ClickedPhoto(thumb.F))
 				]),
 			_List_Nil);
 	});
-var $author$project$PhotoGroove$view = function (model) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('content')
-			]),
-		_List_fromArray(
+var $author$project$PhotoGroove$viewLoaded = F3(
+	function (photos, selectedUrl, chosenSize) {
+		return _List_fromArray(
 			[
 				A2(
 				$elm$html$Html$h1,
@@ -5696,33 +5674,58 @@ var $author$project$PhotoGroove$view = function (model) {
 					[
 						$elm$html$Html$Attributes$id('thumbnails'),
 						$elm$html$Html$Attributes$class(
-						$author$project$PhotoGroove$sizeToClass(model.G))
+						$author$project$PhotoGroove$sizeToClass(chosenSize))
 					]),
 				A2(
 					$elm$core$List$map,
-					$author$project$PhotoGroove$viewThumbnail(model.x),
-					model.H)),
+					$author$project$PhotoGroove$viewThumbnail(selectedUrl),
+					photos)),
 				A2(
 				$elm$html$Html$img,
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$class('large'),
 						$elm$html$Html$Attributes$alt(''),
-						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('large/' + model.x))
+						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('large/' + selectedUrl))
 					]),
 				_List_Nil)
-			]));
+			]);
+	});
+var $author$project$PhotoGroove$view = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('content')
+			]),
+		function () {
+			var _v0 = model.q;
+			switch (_v0.$) {
+				case 1:
+					var photos = _v0.a;
+					var selectedUrl = _v0.b;
+					return A3($author$project$PhotoGroove$viewLoaded, photos, selectedUrl, model.G);
+				case 0:
+					return _List_Nil;
+				default:
+					var errorMessage = _v0.a;
+					return _List_fromArray(
+						[
+							$elm$html$Html$text('Error ' + errorMessage)
+						]);
+			}
+		}());
 };
 var $author$project$PhotoGroove$main = $elm$browser$Browser$element(
 	{
-		ax: function (flags) {
+		aw: function (flags) {
 			return _Utils_Tuple2($author$project$PhotoGroove$initialModel, $elm$core$Platform$Cmd$none);
 		},
-		aD: function (model) {
+		aC: function (model) {
 			return $elm$core$Platform$Sub$none;
 		},
-		aF: $author$project$PhotoGroove$update,
-		aG: $author$project$PhotoGroove$view
+		aE: $author$project$PhotoGroove$update,
+		aF: $author$project$PhotoGroove$view
 	});
 _Platform_export({'PhotoGroove':{'init':$author$project$PhotoGroove$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));
