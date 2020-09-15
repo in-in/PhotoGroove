@@ -600,11 +600,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.L.B === region.Q.B)
+	if (region.L.B === region.R.B)
 	{
 		return 'on line ' + region.L.B;
 	}
-	return 'on lines ' + region.L.B + ' through ' + region.Q.B;
+	return 'on lines ' + region.L.B + ' through ' + region.R.B;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aD,
+		impl.aE,
 		impl.aR,
-		impl.aO,
+		impl.aP,
 		function() { return function() {} }
 	);
 });
@@ -3928,9 +3928,9 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aD,
+		impl.aE,
 		impl.aR,
-		impl.aO,
+		impl.aP,
 		function(sendToApp, initialModel) {
 			var view = impl.aS;
 			/**/
@@ -3964,9 +3964,9 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aD,
+		impl.aE,
 		impl.aR,
-		impl.aO,
+		impl.aP,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.K && impl.K(sendToApp)
 			var view = impl.aS;
@@ -3977,12 +3977,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.av);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aw);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.aQ) && (_VirtualDom_doc.title = title = doc.aQ);
+				(title !== doc.N) && (_VirtualDom_doc.title = title = doc.N);
 			});
 		}
 	);
@@ -4038,8 +4038,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.aG;
-	var onUrlRequest = impl.aH;
+	var onUrlChange = impl.aH;
+	var onUrlRequest = impl.aI;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.ad === next.ad
-							&& curr.V === next.V
-							&& curr.aa.a === next.aa.a
+							&& curr.ae === next.ae
+							&& curr.W === next.W
+							&& curr.ab.a === next.ab.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4069,13 +4069,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		aD: function(flags)
+		aE: function(flags)
 		{
-			return A3(impl.aD, flags, _Browser_getUrl(), key);
+			return A3(impl.aE, flags, _Browser_getUrl(), key);
 		},
 		aS: impl.aS,
 		aR: impl.aR,
-		aO: impl.aO
+		aP: impl.aP
 	});
 }
 
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { aB: 'hidden', aw: 'visibilitychange' }
+		? { aC: 'hidden', ax: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { aB: 'mozHidden', aw: 'mozvisibilitychange' }
+		? { aC: 'mozHidden', ax: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { aB: 'msHidden', aw: 'msvisibilitychange' }
+		? { aC: 'msHidden', ax: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { aB: 'webkitHidden', aw: 'webkitvisibilitychange' }
-		: { aB: 'hidden', aw: 'visibilitychange' };
+		? { aC: 'webkitHidden', ax: 'webkitvisibilitychange' }
+		: { aC: 'hidden', ax: 'visibilitychange' };
 }
 
 
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		aj: _Browser_getScene(),
-		ao: {
-			aq: _Browser_window.pageXOffset,
-			ar: _Browser_window.pageYOffset,
-			ap: _Browser_doc.documentElement.clientWidth,
-			U: _Browser_doc.documentElement.clientHeight
+		ak: _Browser_getScene(),
+		ap: {
+			ar: _Browser_window.pageXOffset,
+			as: _Browser_window.pageYOffset,
+			aq: _Browser_doc.documentElement.clientWidth,
+			V: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4247,8 +4247,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		ap: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		U: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		aq: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		V: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			aj: {
-				ap: node.scrollWidth,
-				U: node.scrollHeight
+			ak: {
+				aq: node.scrollWidth,
+				V: node.scrollHeight
 			},
-			ao: {
-				aq: node.scrollLeft,
-				ar: node.scrollTop,
-				ap: node.clientWidth,
-				U: node.clientHeight
+			ap: {
+				ar: node.scrollLeft,
+				as: node.scrollTop,
+				aq: node.clientWidth,
+				V: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			aj: _Browser_getScene(),
-			ao: {
-				aq: x,
-				ar: y,
-				ap: _Browser_doc.documentElement.clientWidth,
-				U: _Browser_doc.documentElement.clientHeight
+			ak: _Browser_getScene(),
+			ap: {
+				ar: x,
+				as: y,
+				aq: _Browser_doc.documentElement.clientWidth,
+				V: _Browser_doc.documentElement.clientHeight
 			},
-			ay: {
-				aq: x + rect.left,
-				ar: y + rect.top,
-				ap: rect.width,
-				U: rect.height
+			az: {
+				ar: x + rect.left,
+				as: y + rect.top,
+				aq: rect.width,
+				V: rect.height
 			}
 		};
 	});
@@ -4365,25 +4365,25 @@ var _Http_toTask = F3(function(router, toTask, request)
 	return _Scheduler_binding(function(callback)
 	{
 		function done(response) {
-			callback(toTask(request.az.a(response)));
+			callback(toTask(request.aA.a(response)));
 		}
 
 		var xhr = new XMLHttpRequest();
 		xhr.addEventListener('error', function() { done($elm$http$Http$NetworkError_); });
 		xhr.addEventListener('timeout', function() { done($elm$http$Http$Timeout_); });
-		xhr.addEventListener('load', function() { done(_Http_toResponse(request.az.b, xhr)); });
-		$elm$core$Maybe$isJust(request.an) && _Http_track(router, xhr, request.an.a);
+		xhr.addEventListener('load', function() { done(_Http_toResponse(request.aA.b, xhr)); });
+		$elm$core$Maybe$isJust(request.ao) && _Http_track(router, xhr, request.ao.a);
 
 		try {
-			xhr.open(request.aE, request.y, true);
+			xhr.open(request.aF, request.v, true);
 		} catch (e) {
-			return done($elm$http$Http$BadUrl_(request.y));
+			return done($elm$http$Http$BadUrl_(request.v));
 		}
 
 		_Http_configureRequest(xhr, request);
 
-		request.av.a && xhr.setRequestHeader('Content-Type', request.av.a);
-		xhr.send(request.av.b);
+		request.aw.a && xhr.setRequestHeader('Content-Type', request.aw.a);
+		xhr.send(request.aw.b);
 
 		return function() { xhr.c = true; xhr.abort(); };
 	});
@@ -4394,13 +4394,13 @@ var _Http_toTask = F3(function(router, toTask, request)
 
 function _Http_configureRequest(xhr, request)
 {
-	for (var headers = request.T; headers.b; headers = headers.b) // WHILE_CONS
+	for (var headers = request.U; headers.b; headers = headers.b) // WHILE_CONS
 	{
 		xhr.setRequestHeader(headers.a.a, headers.a.b);
 	}
-	xhr.timeout = request.aP.a || 0;
-	xhr.responseType = request.az.d;
-	xhr.withCredentials = request.at;
+	xhr.timeout = request.aQ.a || 0;
+	xhr.responseType = request.aA.d;
+	xhr.withCredentials = request.au;
 }
 
 
@@ -4421,10 +4421,10 @@ function _Http_toResponse(toBody, xhr)
 function _Http_toMetadata(xhr)
 {
 	return {
-		y: xhr.responseURL,
-		aM: xhr.status,
-		aN: xhr.statusText,
-		T: _Http_parseHeaders(xhr.getAllResponseHeaders())
+		v: xhr.responseURL,
+		aN: xhr.status,
+		aO: xhr.statusText,
+		U: _Http_parseHeaders(xhr.getAllResponseHeaders())
 	};
 }
 
@@ -4519,15 +4519,15 @@ function _Http_track(router, xhr, tracker)
 	xhr.upload.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
-			aL: event.loaded,
-			ak: event.total
+			aM: event.loaded,
+			al: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
-			aJ: event.loaded,
-			ak: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
+			aK: event.loaded,
+			al: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
 }
@@ -5117,7 +5117,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {S: fragment, V: host, Z: path, aa: port_, ad: protocol, ae: query};
+		return {T: fragment, W: host, _: path, ab: port_, ae: protocol, af: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5399,6 +5399,7 @@ var $elm$browser$Browser$element = _Browser_element;
 var $author$project$PhotoGroove$GotPhotos = function (a) {
 	return {$: 4, a: a};
 };
+var $elm$json$Json$Decode$decodeString = _Json_runOnString;
 var $elm$http$Http$BadStatus_ = F2(
 	function (a, b) {
 		return {$: 3, a: a, b: b};
@@ -5954,17 +5955,6 @@ var $elm$http$Http$expectStringResponse = F2(
 			$elm$core$Basics$identity,
 			A2($elm$core$Basics$composeR, toResult, toMsg));
 	});
-var $elm$http$Http$BadBody = function (a) {
-	return {$: 4, a: a};
-};
-var $elm$http$Http$BadStatus = function (a) {
-	return {$: 3, a: a};
-};
-var $elm$http$Http$BadUrl = function (a) {
-	return {$: 0, a: a};
-};
-var $elm$http$Http$NetworkError = {$: 2};
-var $elm$http$Http$Timeout = {$: 1};
 var $elm$core$Result$mapError = F2(
 	function (f, result) {
 		if (!result.$) {
@@ -5976,6 +5966,17 @@ var $elm$core$Result$mapError = F2(
 				f(e));
 		}
 	});
+var $elm$http$Http$BadBody = function (a) {
+	return {$: 4, a: a};
+};
+var $elm$http$Http$BadStatus = function (a) {
+	return {$: 3, a: a};
+};
+var $elm$http$Http$BadUrl = function (a) {
+	return {$: 0, a: a};
+};
+var $elm$http$Http$NetworkError = {$: 2};
+var $elm$http$Http$Timeout = {$: 1};
 var $elm$http$Http$resolve = F2(
 	function (toResult, response) {
 		switch (response.$) {
@@ -5990,7 +5991,7 @@ var $elm$http$Http$resolve = F2(
 			case 3:
 				var metadata = response.a;
 				return $elm$core$Result$Err(
-					$elm$http$Http$BadStatus(metadata.aM));
+					$elm$http$Http$BadStatus(metadata.aN));
 			default:
 				var body = response.b;
 				return A2(
@@ -5999,19 +6000,26 @@ var $elm$http$Http$resolve = F2(
 					toResult(body));
 		}
 	});
-var $elm$http$Http$expectString = function (toMsg) {
-	return A2(
-		$elm$http$Http$expectStringResponse,
-		toMsg,
-		$elm$http$Http$resolve($elm$core$Result$Ok));
-};
+var $elm$http$Http$expectJson = F2(
+	function (toMsg, decoder) {
+		return A2(
+			$elm$http$Http$expectStringResponse,
+			toMsg,
+			$elm$http$Http$resolve(
+				function (string) {
+					return A2(
+						$elm$core$Result$mapError,
+						$elm$json$Json$Decode$errorToString,
+						A2($elm$json$Json$Decode$decodeString, decoder, string));
+				}));
+	});
 var $elm$http$Http$emptyBody = _Http_emptyBody;
 var $elm$http$Http$Request = function (a) {
 	return {$: 1, a: a};
 };
 var $elm$http$Http$State = F2(
 	function (reqs, subs) {
-		return {ag: reqs, al: subs};
+		return {ah: reqs, am: subs};
 	});
 var $elm$http$Http$init = $elm$core$Task$succeed(
 	A2($elm$http$Http$State, $elm$core$Dict$empty, _List_Nil));
@@ -6055,7 +6063,7 @@ var $elm$http$Http$updateReqs = F3(
 					return A2(
 						$elm$core$Task$andThen,
 						function (pid) {
-							var _v4 = req.an;
+							var _v4 = req.ao;
 							if (_v4.$ === 1) {
 								return A3($elm$http$Http$updateReqs, router, otherCmds, reqs);
 							} else {
@@ -6085,7 +6093,7 @@ var $elm$http$Http$onEffects = F4(
 				return $elm$core$Task$succeed(
 					A2($elm$http$Http$State, reqs, subs));
 			},
-			A3($elm$http$Http$updateReqs, router, cmds, state.ag));
+			A3($elm$http$Http$updateReqs, router, cmds, state.ah));
 	});
 var $elm$core$List$maybeCons = F3(
 	function (f, mx, xs) {
@@ -6128,7 +6136,7 @@ var $elm$http$Http$onSelfMsg = F3(
 				A2(
 					$elm$core$List$filterMap,
 					A3($elm$http$Http$maybeSend, router, tracker, progress),
-					state.al)));
+					state.am)));
 	});
 var $elm$http$Http$Cancel = function (a) {
 	return {$: 0, a: a};
@@ -6142,14 +6150,14 @@ var $elm$http$Http$cmdMap = F2(
 			var r = cmd.a;
 			return $elm$http$Http$Request(
 				{
-					at: r.at,
-					av: r.av,
-					az: A2(_Http_mapExpect, func, r.az),
-					T: r.T,
-					aE: r.aE,
-					aP: r.aP,
-					an: r.an,
-					y: r.y
+					au: r.au,
+					aw: r.aw,
+					aA: A2(_Http_mapExpect, func, r.aA),
+					U: r.U,
+					aF: r.aF,
+					aQ: r.aQ,
+					ao: r.ao,
+					v: r.v
 				});
 		}
 	});
@@ -6172,16 +6180,99 @@ var $elm$http$Http$subscription = _Platform_leaf('Http');
 var $elm$http$Http$request = function (r) {
 	return $elm$http$Http$command(
 		$elm$http$Http$Request(
-			{at: false, av: r.av, az: r.az, T: r.T, aE: r.aE, aP: r.aP, an: r.an, y: r.y}));
+			{au: false, aw: r.aw, aA: r.aA, U: r.U, aF: r.aF, aQ: r.aQ, ao: r.ao, v: r.v}));
 };
 var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
-		{av: $elm$http$Http$emptyBody, az: r.az, T: _List_Nil, aE: 'GET', aP: $elm$core$Maybe$Nothing, an: $elm$core$Maybe$Nothing, y: r.y});
+		{aw: $elm$http$Http$emptyBody, aA: r.aA, U: _List_Nil, aF: 'GET', aQ: $elm$core$Maybe$Nothing, ao: $elm$core$Maybe$Nothing, v: r.v});
 };
+var $elm$json$Json$Decode$list = _Json_decodeList;
+var $author$project$PhotoGroove$Photo = F3(
+	function (url, size, title) {
+		return {al: size, N: title, v: url};
+	});
+var $elm$json$Json$Decode$int = _Json_decodeInt;
+var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = $elm$json$Json$Decode$map2($elm$core$Basics$apR);
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $elm$json$Json$Decode$andThen = _Json_andThen;
+var $elm$json$Json$Decode$decodeValue = _Json_run;
+var $elm$json$Json$Decode$fail = _Json_fail;
+var $elm$json$Json$Decode$null = _Json_decodeNull;
+var $elm$json$Json$Decode$oneOf = _Json_oneOf;
+var $elm$json$Json$Decode$value = _Json_decodeValue;
+var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder = F3(
+	function (pathDecoder, valDecoder, fallback) {
+		var nullOr = function (decoder) {
+			return $elm$json$Json$Decode$oneOf(
+				_List_fromArray(
+					[
+						decoder,
+						$elm$json$Json$Decode$null(fallback)
+					]));
+		};
+		var handleResult = function (input) {
+			var _v0 = A2($elm$json$Json$Decode$decodeValue, pathDecoder, input);
+			if (!_v0.$) {
+				var rawValue = _v0.a;
+				var _v1 = A2(
+					$elm$json$Json$Decode$decodeValue,
+					nullOr(valDecoder),
+					rawValue);
+				if (!_v1.$) {
+					var finalResult = _v1.a;
+					return $elm$json$Json$Decode$succeed(finalResult);
+				} else {
+					var finalErr = _v1.a;
+					return $elm$json$Json$Decode$fail(
+						$elm$json$Json$Decode$errorToString(finalErr));
+				}
+			} else {
+				return $elm$json$Json$Decode$succeed(fallback);
+			}
+		};
+		return A2($elm$json$Json$Decode$andThen, handleResult, $elm$json$Json$Decode$value);
+	});
+var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional = F4(
+	function (key, valDecoder, fallback, decoder) {
+		return A2(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A3(
+				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optionalDecoder,
+				A2($elm$json$Json$Decode$field, key, $elm$json$Json$Decode$value),
+				valDecoder,
+				fallback),
+			decoder);
+	});
+var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
+	function (key, valDecoder, decoder) {
+		return A2(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A2($elm$json$Json$Decode$field, key, valDecoder),
+			decoder);
+	});
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$PhotoGroove$photoDecoder = A4(
+	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$optional,
+	'title',
+	$elm$json$Json$Decode$string,
+	'(untitled)',
+	A3(
+		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'size',
+		$elm$json$Json$Decode$int,
+		A3(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'url',
+			$elm$json$Json$Decode$string,
+			$elm$json$Json$Decode$succeed($author$project$PhotoGroove$Photo))));
+var $author$project$PhotoGroove$urlPrefix = 'https://elm-in-action.com/';
 var $author$project$PhotoGroove$initialCmd = $elm$http$Http$get(
 	{
-		az: $elm$http$Http$expectString($author$project$PhotoGroove$GotPhotos),
-		y: 'https://elm-in-action.com/photos/list'
+		aA: A2(
+			$elm$http$Http$expectJson,
+			$author$project$PhotoGroove$GotPhotos,
+			$elm$json$Json$Decode$list($author$project$PhotoGroove$photoDecoder)),
+		v: $author$project$PhotoGroove$urlPrefix + 'photos/list.json'
 	});
 var $author$project$PhotoGroove$Loading = {$: 0};
 var $author$project$PhotoGroove$Medium = 1;
@@ -6198,9 +6289,6 @@ var $author$project$PhotoGroove$Loaded = F2(
 	function (a, b) {
 		return {$: 1, a: a, b: b};
 	});
-var $author$project$PhotoGroove$Photo = function (url) {
-	return {y: url};
-};
 var $elm$random$Random$Generate = $elm$core$Basics$identity;
 var $elm$random$Random$Seed = F2(
 	function (a, b) {
@@ -6314,7 +6402,7 @@ var $author$project$PhotoGroove$selectUrl = F2(
 			case 0:
 				return status;
 			default:
-				var errorMessages = status.a;
+				var errorMessage = status.a;
 				return status;
 		}
 	});
@@ -6418,7 +6506,7 @@ var $author$project$PhotoGroove$update = F2(
 					_Utils_update(
 						model,
 						{
-							j: A2($author$project$PhotoGroove$selectUrl, photo.y, model.j)
+							j: A2($author$project$PhotoGroove$selectUrl, photo.v, model.j)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 1:
@@ -6454,17 +6542,15 @@ var $author$project$PhotoGroove$update = F2(
 				}
 			default:
 				if (!msg.a.$) {
-					var responseStr = msg.a.a;
-					var _v3 = A2($elm$core$String$split, ',', responseStr);
-					if (_v3.b) {
-						var urls = _v3;
-						var firstUrl = urls.a;
-						var photos = A2($elm$core$List$map, $author$project$PhotoGroove$Photo, urls);
+					var photos = msg.a.a;
+					if (photos.b) {
+						var first = photos.a;
+						var rest = photos.b;
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
 								{
-									j: A2($author$project$PhotoGroove$Loaded, photos, firstUrl)
+									j: A2($author$project$PhotoGroove$Loaded, photos, first.v)
 								}),
 							$elm$core$Platform$Cmd$none);
 					} else {
@@ -6543,7 +6629,6 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $author$project$PhotoGroove$urlPrefix = 'https://elm-in-action.com/';
 var $author$project$PhotoGroove$ClickedSize = function (a) {
 	return {$: 1, a: a};
 };
@@ -6609,6 +6694,7 @@ var $elm$html$Html$Attributes$classList = function (classes) {
 				$elm$core$Tuple$first,
 				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
 };
+var $elm$html$Html$Attributes$title = $elm$html$Html$Attributes$stringProperty('title');
 var $author$project$PhotoGroove$viewThumbnail = F2(
 	function (selectedUrl, thumb) {
 		return A2(
@@ -6616,17 +6702,19 @@ var $author$project$PhotoGroove$viewThumbnail = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$src(
-					_Utils_ap($author$project$PhotoGroove$urlPrefix, thumb.y)),
-					$elm$html$Html$Attributes$alt(''),
+					_Utils_ap($author$project$PhotoGroove$urlPrefix, thumb.v)),
+					$elm$html$Html$Attributes$alt(thumb.N),
+					$elm$html$Html$Attributes$title(
+					thumb.N + (' [' + ($elm$core$String$fromInt(thumb.al) + ' KB]'))),
 					$elm$html$Html$Attributes$classList(
 					_List_fromArray(
 						[
 							_Utils_Tuple2(
 							'selected',
-							_Utils_eq(selectedUrl, thumb.y))
+							_Utils_eq(selectedUrl, thumb.v))
 						])),
 					$elm$html$Html$Events$onClick(
-					$author$project$PhotoGroove$ClickedPhoto(thumb.y))
+					$author$project$PhotoGroove$ClickedPhoto(thumb.v))
 				]),
 			_List_Nil);
 	});
@@ -6713,17 +6801,17 @@ var $author$project$PhotoGroove$view = function (model) {
 					var errorMessage = _v0.a;
 					return _List_fromArray(
 						[
-							$elm$html$Html$text('Error ' + errorMessage)
+							$elm$html$Html$text('Error: ' + errorMessage)
 						]);
 			}
 		}());
 };
 var $author$project$PhotoGroove$main = $elm$browser$Browser$element(
 	{
-		aD: function (_v0) {
+		aE: function (_v0) {
 			return _Utils_Tuple2($author$project$PhotoGroove$initialModel, $author$project$PhotoGroove$initialCmd);
 		},
-		aO: function (_v1) {
+		aP: function (_v1) {
 			return $elm$core$Platform$Sub$none;
 		},
 		aR: $author$project$PhotoGroove$update,
