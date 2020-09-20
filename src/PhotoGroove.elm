@@ -28,6 +28,9 @@ type Msg
     | ClickedSurpriseMe
     | GotRandomPhoto Photo
     | GotPhotos (Result Http.Error (List Photo))
+    | SlideHue Int
+    | SlideRipple Int
+    | SlideNoise Int
 
 
 view : Model -> Html Msg
@@ -35,7 +38,7 @@ view model =
     div [ class "content" ] <|
         case model.status of
             Loaded photos selectedUrl ->
-                viewLoaded photos selectedUrl model.chosenSize
+                viewLoaded photos selectedUrl model
 
             Loading ->
                 []
@@ -44,21 +47,21 @@ view model =
                 [ text ("Error: " ++ errorMessage) ]
 
 
-viewLoaded : List Photo -> String -> ThumbnailSize -> List (Html Msg)
-viewLoaded photos selectedUrl chosenSize =
+viewLoaded : List Photo -> String -> Model -> List (Html Msg)
+viewLoaded photos selectedUrl model =
     [ h1 [] [ text "Photo Groove" ]
     , hr [] []
     , button
         [ onClick ClickedSurpriseMe ]
         [ text "Surprise Me!" ]
     , div [ class "filters" ]
-        [ viewFilter "Hue" 0
-        , viewFilter "Ripple" 0
-        , viewFilter "Noise" 0
+        [ viewFilter SlideHue "Hue" model.hue
+        , viewFilter SlideRipple "Ripple" model.ripple
+        , viewFilter SlideNoise "Noise" model.noise
         ]
     , h3 [] [ text "Thumbnail Size:" ]
     , div [ id "choose-size" ] (List.map viewSizeChooser [ Small, Medium, Large ])
-    , div [ id "thumbnails", class (sizeToClass chosenSize) ]
+    , div [ id "thumbnails", class (sizeToClass model.chosenSize) ]
         (List.map (viewThumbnail selectedUrl) photos)
     , img
         [ class "large"
@@ -153,6 +156,19 @@ type Status
 type alias Model =
     { status : Status
     , chosenSize : ThumbnailSize
+    , hue : Int
+    , ripple : Int
+    , noise : Int
+    }
+
+
+initialModel : Model
+initialModel =
+    { status = Loading
+    , chosenSize = Medium
+    , hue = 5
+    , ripple = 5
+    , noise = 5
     }
 
 
@@ -162,13 +178,6 @@ initialCmd =
         { url = urlPrefix ++ "photos/list.json"
         , expect = Http.expectJson GotPhotos (list photoDecoder)
         }
-
-
-initialModel : Model
-initialModel =
-    { status = Loading
-    , chosenSize = Medium
-    }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -209,6 +218,15 @@ update msg model =
 
         GotPhotos (Err httpError) ->
             ( { model | status = Errored "Server Error!" }, Cmd.none )
+
+        SlideHue hue ->
+            ( { model | hue = hue }, Cmd.none )
+
+        SlideRipple ripple ->
+            ( { model | ripple = ripple }, Cmd.none )
+
+        SlideNoise noise ->
+            ( { model | noise = noise }, Cmd.none )
 
 
 selectUrl : String -> Status -> Status
