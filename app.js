@@ -600,11 +600,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.O.B === region.U.B)
+	if (region.R.C === region.X.C)
 	{
-		return 'on line ' + region.O.B;
+		return 'on line ' + region.R.C;
 	}
-	return 'on lines ' + region.O.B + ' through ' + region.U.B;
+	return 'on lines ' + region.R.C + ' through ' + region.X.C;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aH,
+		impl.aK,
+		impl.aW,
 		impl.aU,
-		impl.aS,
 		function() { return function() {} }
 	);
 });
@@ -2704,9 +2704,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		p: func(record.p),
-		P: record.P,
-		M: record.M
+		q: func(record.q),
+		S: record.S,
+		P: record.P
 	}
 });
 
@@ -2974,11 +2974,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.p;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.P;
+		var message = !tag ? value : tag < 3 ? value.a : value.q;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.S;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.M) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.P) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3928,11 +3928,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aH,
+		impl.aK,
+		impl.aW,
 		impl.aU,
-		impl.aS,
 		function(sendToApp, initialModel) {
-			var view = impl.aV;
+			var view = impl.aX;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3964,12 +3964,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aH,
+		impl.aK,
+		impl.aW,
 		impl.aU,
-		impl.aS,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.N && impl.N(sendToApp)
-			var view = impl.aV;
+			var divertHrefToApp = impl.Q && impl.Q(sendToApp)
+			var view = impl.aX;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3977,12 +3977,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.az);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aC);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.Q) && (_VirtualDom_doc.title = title = doc.Q);
+				(title !== doc.T) && (_VirtualDom_doc.title = title = doc.T);
 			});
 		}
 	);
@@ -4038,12 +4038,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.aK;
-	var onUrlRequest = impl.aL;
+	var onUrlChange = impl.aM;
+	var onUrlRequest = impl.aN;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		N: function(sendToApp)
+		Q: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.ah === next.ah
-							&& curr.Z === next.Z
-							&& curr.ae.a === next.ae.a
+							&& curr.ak === next.ak
+							&& curr.ab === next.ab
+							&& curr.ah.a === next.ah.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4069,13 +4069,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		aH: function(flags)
+		aK: function(flags)
 		{
-			return A3(impl.aH, flags, _Browser_getUrl(), key);
+			return A3(impl.aK, flags, _Browser_getUrl(), key);
 		},
-		aV: impl.aV,
-		aU: impl.aU,
-		aS: impl.aS
+		aX: impl.aX,
+		aW: impl.aW,
+		aU: impl.aU
 	});
 }
 
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { aF: 'hidden', aA: 'visibilitychange' }
+		? { aI: 'hidden', aD: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { aF: 'mozHidden', aA: 'mozvisibilitychange' }
+		? { aI: 'mozHidden', aD: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { aF: 'msHidden', aA: 'msvisibilitychange' }
+		? { aI: 'msHidden', aD: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { aF: 'webkitHidden', aA: 'webkitvisibilitychange' }
-		: { aF: 'hidden', aA: 'visibilitychange' };
+		? { aI: 'webkitHidden', aD: 'webkitvisibilitychange' }
+		: { aI: 'hidden', aD: 'visibilitychange' };
 }
 
 
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		an: _Browser_getScene(),
-		as: {
-			au: _Browser_window.pageXOffset,
-			av: _Browser_window.pageYOffset,
-			at: _Browser_doc.documentElement.clientWidth,
-			Y: _Browser_doc.documentElement.clientHeight
+		aq: _Browser_getScene(),
+		av: {
+			ax: _Browser_window.pageXOffset,
+			ay: _Browser_window.pageYOffset,
+			aw: _Browser_doc.documentElement.clientWidth,
+			aa: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4247,8 +4247,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		at: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		Y: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		aw: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		aa: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			an: {
-				at: node.scrollWidth,
-				Y: node.scrollHeight
+			aq: {
+				aw: node.scrollWidth,
+				aa: node.scrollHeight
 			},
-			as: {
-				au: node.scrollLeft,
-				av: node.scrollTop,
-				at: node.clientWidth,
-				Y: node.clientHeight
+			av: {
+				ax: node.scrollLeft,
+				ay: node.scrollTop,
+				aw: node.clientWidth,
+				aa: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			an: _Browser_getScene(),
-			as: {
-				au: x,
-				av: y,
-				at: _Browser_doc.documentElement.clientWidth,
-				Y: _Browser_doc.documentElement.clientHeight
+			aq: _Browser_getScene(),
+			av: {
+				ax: x,
+				ay: y,
+				aw: _Browser_doc.documentElement.clientWidth,
+				aa: _Browser_doc.documentElement.clientHeight
 			},
-			aC: {
-				au: x + rect.left,
-				av: y + rect.top,
-				at: rect.width,
-				Y: rect.height
+			aF: {
+				ax: x + rect.left,
+				ay: y + rect.top,
+				aw: rect.width,
+				aa: rect.height
 			}
 		};
 	});
@@ -4365,25 +4365,25 @@ var _Http_toTask = F3(function(router, toTask, request)
 	return _Scheduler_binding(function(callback)
 	{
 		function done(response) {
-			callback(toTask(request.aD.a(response)));
+			callback(toTask(request.aG.a(response)));
 		}
 
 		var xhr = new XMLHttpRequest();
 		xhr.addEventListener('error', function() { done($elm$http$Http$NetworkError_); });
 		xhr.addEventListener('timeout', function() { done($elm$http$Http$Timeout_); });
-		xhr.addEventListener('load', function() { done(_Http_toResponse(request.aD.b, xhr)); });
-		$elm$core$Maybe$isJust(request.ar) && _Http_track(router, xhr, request.ar.a);
+		xhr.addEventListener('load', function() { done(_Http_toResponse(request.aG.b, xhr)); });
+		$elm$core$Maybe$isJust(request.au) && _Http_track(router, xhr, request.au.a);
 
 		try {
-			xhr.open(request.aI, request.v, true);
+			xhr.open(request.aL, request.m, true);
 		} catch (e) {
-			return done($elm$http$Http$BadUrl_(request.v));
+			return done($elm$http$Http$BadUrl_(request.m));
 		}
 
 		_Http_configureRequest(xhr, request);
 
-		request.az.a && xhr.setRequestHeader('Content-Type', request.az.a);
-		xhr.send(request.az.b);
+		request.aC.a && xhr.setRequestHeader('Content-Type', request.aC.a);
+		xhr.send(request.aC.b);
 
 		return function() { xhr.c = true; xhr.abort(); };
 	});
@@ -4394,13 +4394,13 @@ var _Http_toTask = F3(function(router, toTask, request)
 
 function _Http_configureRequest(xhr, request)
 {
-	for (var headers = request.X; headers.b; headers = headers.b) // WHILE_CONS
+	for (var headers = request._; headers.b; headers = headers.b) // WHILE_CONS
 	{
 		xhr.setRequestHeader(headers.a.a, headers.a.b);
 	}
-	xhr.timeout = request.aT.a || 0;
-	xhr.responseType = request.aD.d;
-	xhr.withCredentials = request.ax;
+	xhr.timeout = request.aV.a || 0;
+	xhr.responseType = request.aG.d;
+	xhr.withCredentials = request.aA;
 }
 
 
@@ -4421,10 +4421,10 @@ function _Http_toResponse(toBody, xhr)
 function _Http_toMetadata(xhr)
 {
 	return {
-		v: xhr.responseURL,
-		aQ: xhr.status,
-		aR: xhr.statusText,
-		X: _Http_parseHeaders(xhr.getAllResponseHeaders())
+		m: xhr.responseURL,
+		aS: xhr.status,
+		aT: xhr.statusText,
+		_: _Http_parseHeaders(xhr.getAllResponseHeaders())
 	};
 }
 
@@ -4519,15 +4519,15 @@ function _Http_track(router, xhr, tracker)
 	xhr.upload.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
-			aP: event.loaded,
-			ao: event.total
+			aR: event.loaded,
+			ar: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
-			aN: event.loaded,
-			ao: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
+			aP: event.loaded,
+			ar: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
 }
@@ -5117,7 +5117,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {W: fragment, Z: host, ac: path, ae: port_, ah: protocol, ai: query};
+		return {Z: fragment, ab: host, af: path, ah: port_, ak: protocol, al: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5991,7 +5991,7 @@ var $elm$http$Http$resolve = F2(
 			case 3:
 				var metadata = response.a;
 				return $elm$core$Result$Err(
-					$elm$http$Http$BadStatus(metadata.aQ));
+					$elm$http$Http$BadStatus(metadata.aS));
 			default:
 				var body = response.b;
 				return A2(
@@ -6019,7 +6019,7 @@ var $elm$http$Http$Request = function (a) {
 };
 var $elm$http$Http$State = F2(
 	function (reqs, subs) {
-		return {ak: reqs, ap: subs};
+		return {an: reqs, as: subs};
 	});
 var $elm$http$Http$init = $elm$core$Task$succeed(
 	A2($elm$http$Http$State, $elm$core$Dict$empty, _List_Nil));
@@ -6063,7 +6063,7 @@ var $elm$http$Http$updateReqs = F3(
 					return A2(
 						$elm$core$Task$andThen,
 						function (pid) {
-							var _v4 = req.ar;
+							var _v4 = req.au;
 							if (_v4.$ === 1) {
 								return A3($elm$http$Http$updateReqs, router, otherCmds, reqs);
 							} else {
@@ -6093,7 +6093,7 @@ var $elm$http$Http$onEffects = F4(
 				return $elm$core$Task$succeed(
 					A2($elm$http$Http$State, reqs, subs));
 			},
-			A3($elm$http$Http$updateReqs, router, cmds, state.ak));
+			A3($elm$http$Http$updateReqs, router, cmds, state.an));
 	});
 var $elm$core$List$maybeCons = F3(
 	function (f, mx, xs) {
@@ -6136,7 +6136,7 @@ var $elm$http$Http$onSelfMsg = F3(
 				A2(
 					$elm$core$List$filterMap,
 					A3($elm$http$Http$maybeSend, router, tracker, progress),
-					state.ap)));
+					state.as)));
 	});
 var $elm$http$Http$Cancel = function (a) {
 	return {$: 0, a: a};
@@ -6150,14 +6150,14 @@ var $elm$http$Http$cmdMap = F2(
 			var r = cmd.a;
 			return $elm$http$Http$Request(
 				{
-					ax: r.ax,
-					az: r.az,
-					aD: A2(_Http_mapExpect, func, r.aD),
-					X: r.X,
-					aI: r.aI,
-					aT: r.aT,
-					ar: r.ar,
-					v: r.v
+					aA: r.aA,
+					aC: r.aC,
+					aG: A2(_Http_mapExpect, func, r.aG),
+					_: r._,
+					aL: r.aL,
+					aV: r.aV,
+					au: r.au,
+					m: r.m
 				});
 		}
 	});
@@ -6180,16 +6180,16 @@ var $elm$http$Http$subscription = _Platform_leaf('Http');
 var $elm$http$Http$request = function (r) {
 	return $elm$http$Http$command(
 		$elm$http$Http$Request(
-			{ax: false, az: r.az, aD: r.aD, X: r.X, aI: r.aI, aT: r.aT, ar: r.ar, v: r.v}));
+			{aA: false, aC: r.aC, aG: r.aG, _: r._, aL: r.aL, aV: r.aV, au: r.au, m: r.m}));
 };
 var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
-		{az: $elm$http$Http$emptyBody, aD: r.aD, X: _List_Nil, aI: 'GET', aT: $elm$core$Maybe$Nothing, ar: $elm$core$Maybe$Nothing, v: r.v});
+		{aC: $elm$http$Http$emptyBody, aG: r.aG, _: _List_Nil, aL: 'GET', aV: $elm$core$Maybe$Nothing, au: $elm$core$Maybe$Nothing, m: r.m});
 };
 var $elm$json$Json$Decode$list = _Json_decodeList;
 var $author$project$PhotoGroove$Photo = F3(
 	function (url, size, title) {
-		return {ao: size, Q: title, v: url};
+		return {ar: size, T: title, m: url};
 	});
 var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = $elm$json$Json$Decode$map2($elm$core$Basics$apR);
@@ -6268,15 +6268,15 @@ var $author$project$PhotoGroove$photoDecoder = A4(
 var $author$project$PhotoGroove$urlPrefix = 'https://elm-in-action.com/';
 var $author$project$PhotoGroove$initialCmd = $elm$http$Http$get(
 	{
-		aD: A2(
+		aG: A2(
 			$elm$http$Http$expectJson,
 			$author$project$PhotoGroove$GotPhotos,
 			$elm$json$Json$Decode$list($author$project$PhotoGroove$photoDecoder)),
-		v: $author$project$PhotoGroove$urlPrefix + 'photos/list.json'
+		m: $author$project$PhotoGroove$urlPrefix + 'photos/list.json'
 	});
 var $author$project$PhotoGroove$Loading = {$: 0};
 var $author$project$PhotoGroove$Medium = 1;
-var $author$project$PhotoGroove$initialModel = {G: 1, H: 5, I: 5, J: 5, j: $author$project$PhotoGroove$Loading};
+var $author$project$PhotoGroove$initialModel = {K: 1, B: 5, D: 5, E: 5, i: $author$project$PhotoGroove$Loading};
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $author$project$PhotoGroove$Errored = function (a) {
@@ -6289,6 +6289,82 @@ var $author$project$PhotoGroove$Loaded = F2(
 	function (a, b) {
 		return {$: 1, a: a, b: b};
 	});
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $elm$json$Json$Encode$int = _Json_wrap;
+var $elm$json$Json$Encode$list = F2(
+	function (func, entries) {
+		return _Json_wrap(
+			A3(
+				$elm$core$List$foldl,
+				_Json_addEntry(func),
+				_Json_emptyArray(0),
+				entries));
+	});
+var $elm$json$Json$Encode$object = function (pairs) {
+	return _Json_wrap(
+		A3(
+			$elm$core$List$foldl,
+			F2(
+				function (_v0, obj) {
+					var k = _v0.a;
+					var v = _v0.b;
+					return A3(_Json_addField, k, v, obj);
+				}),
+			_Json_emptyObject(0),
+			pairs));
+};
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $author$project$PhotoGroove$setFilters = _Platform_outgoingPort(
+	'setFilters',
+	function ($) {
+		return $elm$json$Json$Encode$object(
+			_List_fromArray(
+				[
+					_Utils_Tuple2(
+					'filters',
+					$elm$json$Json$Encode$list(
+						function ($) {
+							return $elm$json$Json$Encode$object(
+								_List_fromArray(
+									[
+										_Utils_Tuple2(
+										'amount',
+										$elm$json$Json$Encode$int($.J)),
+										_Utils_Tuple2(
+										'name',
+										$elm$json$Json$Encode$string($.L))
+									]));
+						})($.M)),
+					_Utils_Tuple2(
+					'url',
+					$elm$json$Json$Encode$string($.m))
+				]));
+	});
+var $author$project$PhotoGroove$applyFilters = function (model) {
+	var _v0 = model.i;
+	switch (_v0.$) {
+		case 1:
+			var photos = _v0.a;
+			var selectedUrl = _v0.b;
+			var url = $author$project$PhotoGroove$urlPrefix + ('large/' + selectedUrl);
+			var filters = _List_fromArray(
+				[
+					{J: model.B, L: 'Hue'},
+					{J: model.E, L: 'Ripple'},
+					{J: model.D, L: 'Noise'}
+				]);
+			return _Utils_Tuple2(
+				model,
+				$author$project$PhotoGroove$setFilters(
+					{M: filters, m: url}));
+		case 0:
+			return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+		default:
+			var errorMessage = _v0.a;
+			return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+	}
+};
 var $elm$random$Random$Generate = $elm$core$Basics$identity;
 var $elm$random$Random$Seed = F2(
 	function (a, b) {
@@ -6387,8 +6463,6 @@ var $elm$random$Random$generate = F2(
 		return $elm$random$Random$command(
 			A2($elm$random$Random$map, tagger, generator));
 	});
-var $elm$core$Platform$Cmd$batch = _Platform_batch;
-var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$Tuple$pair = F2(
 	function (a, b) {
 		return _Utils_Tuple2(a, b);
@@ -6493,31 +6567,29 @@ var $author$project$PhotoGroove$update = F2(
 		switch (msg.$) {
 			case 0:
 				var url = msg.a;
-				return _Utils_Tuple2(
+				return $author$project$PhotoGroove$applyFilters(
 					_Utils_update(
 						model,
 						{
-							j: A2($author$project$PhotoGroove$selectUrl, url, model.j)
-						}),
-					$elm$core$Platform$Cmd$none);
+							i: A2($author$project$PhotoGroove$selectUrl, url, model.i)
+						}));
 			case 3:
 				var photo = msg.a;
-				return _Utils_Tuple2(
+				return $author$project$PhotoGroove$applyFilters(
 					_Utils_update(
 						model,
 						{
-							j: A2($author$project$PhotoGroove$selectUrl, photo.v, model.j)
-						}),
-					$elm$core$Platform$Cmd$none);
+							i: A2($author$project$PhotoGroove$selectUrl, photo.m, model.i)
+						}));
 			case 1:
 				var size = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{G: size}),
+						{K: size}),
 					$elm$core$Platform$Cmd$none);
 			case 2:
-				var _v1 = model.j;
+				var _v1 = model.i;
 				switch (_v1.$) {
 					case 1:
 						if (_v1.a.b) {
@@ -6550,7 +6622,7 @@ var $author$project$PhotoGroove$update = F2(
 							_Utils_update(
 								model,
 								{
-									j: A2($author$project$PhotoGroove$Loaded, photos, first.v)
+									i: A2($author$project$PhotoGroove$Loaded, photos, first.m)
 								}),
 							$elm$core$Platform$Cmd$none);
 					} else {
@@ -6558,7 +6630,7 @@ var $author$project$PhotoGroove$update = F2(
 							_Utils_update(
 								model,
 								{
-									j: $author$project$PhotoGroove$Errored('0 photos found')
+									i: $author$project$PhotoGroove$Errored('0 photos found')
 								}),
 							$elm$core$Platform$Cmd$none);
 					}
@@ -6568,7 +6640,7 @@ var $author$project$PhotoGroove$update = F2(
 						_Utils_update(
 							model,
 							{
-								j: $author$project$PhotoGroove$Errored('Server Error!')
+								i: $author$project$PhotoGroove$Errored('Server Error!')
 							}),
 						$elm$core$Platform$Cmd$none);
 				}
@@ -6577,25 +6649,24 @@ var $author$project$PhotoGroove$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{H: hue}),
+						{B: hue}),
 					$elm$core$Platform$Cmd$none);
 			case 6:
 				var ripple = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{J: ripple}),
+						{E: ripple}),
 					$elm$core$Platform$Cmd$none);
 			default:
 				var noise = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{I: noise}),
+						{D: noise}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
-var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
 		return A2(
@@ -6659,7 +6730,6 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $elm$json$Json$Encode$int = _Json_wrap;
 var $elm$html$Html$label = _VirtualDom_node('label');
 var $elm$html$Html$Attributes$max = $elm$html$Html$Attributes$stringProperty('max');
 var $elm$json$Json$Decode$at = F2(
@@ -6807,19 +6877,19 @@ var $author$project$PhotoGroove$viewThumbnail = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$src(
-					_Utils_ap($author$project$PhotoGroove$urlPrefix, thumb.v)),
-					$elm$html$Html$Attributes$alt(thumb.Q),
+					_Utils_ap($author$project$PhotoGroove$urlPrefix, thumb.m)),
+					$elm$html$Html$Attributes$alt(thumb.T),
 					$elm$html$Html$Attributes$title(
-					thumb.Q + (' [' + ($elm$core$String$fromInt(thumb.ao) + ' KB]'))),
+					thumb.T + (' [' + ($elm$core$String$fromInt(thumb.ar) + ' KB]'))),
 					$elm$html$Html$Attributes$classList(
 					_List_fromArray(
 						[
 							_Utils_Tuple2(
 							'selected',
-							_Utils_eq(selectedUrl, thumb.v))
+							_Utils_eq(selectedUrl, thumb.m))
 						])),
 					$elm$html$Html$Events$onClick(
-					$author$project$PhotoGroove$ClickedPhoto(thumb.v))
+					$author$project$PhotoGroove$ClickedPhoto(thumb.m))
 				]),
 			_List_Nil);
 	});
@@ -6853,9 +6923,9 @@ var $author$project$PhotoGroove$viewLoaded = F3(
 					]),
 				_List_fromArray(
 					[
-						A3($author$project$PhotoGroove$viewFilter, $author$project$PhotoGroove$SlideHue, 'Hue', model.H),
-						A3($author$project$PhotoGroove$viewFilter, $author$project$PhotoGroove$SlideRipple, 'Ripple', model.J),
-						A3($author$project$PhotoGroove$viewFilter, $author$project$PhotoGroove$SlideNoise, 'Noise', model.I)
+						A3($author$project$PhotoGroove$viewFilter, $author$project$PhotoGroove$SlideHue, 'Hue', model.B),
+						A3($author$project$PhotoGroove$viewFilter, $author$project$PhotoGroove$SlideRipple, 'Ripple', model.E),
+						A3($author$project$PhotoGroove$viewFilter, $author$project$PhotoGroove$SlideNoise, 'Noise', model.D)
 					])),
 				A2(
 				$elm$html$Html$h3,
@@ -6881,7 +6951,7 @@ var $author$project$PhotoGroove$viewLoaded = F3(
 					[
 						$elm$html$Html$Attributes$id('thumbnails'),
 						$elm$html$Html$Attributes$class(
-						$author$project$PhotoGroove$sizeToClass(model.G))
+						$author$project$PhotoGroove$sizeToClass(model.K))
 					]),
 				A2(
 					$elm$core$List$map,
@@ -6906,7 +6976,7 @@ var $author$project$PhotoGroove$view = function (model) {
 				$elm$html$Html$Attributes$class('content')
 			]),
 		function () {
-			var _v0 = model.j;
+			var _v0 = model.i;
 			switch (_v0.$) {
 				case 1:
 					var photos = _v0.a;
@@ -6925,14 +6995,14 @@ var $author$project$PhotoGroove$view = function (model) {
 };
 var $author$project$PhotoGroove$main = $elm$browser$Browser$element(
 	{
-		aH: function (_v0) {
+		aK: function (_v0) {
 			return _Utils_Tuple2($author$project$PhotoGroove$initialModel, $author$project$PhotoGroove$initialCmd);
 		},
-		aS: function (_v1) {
+		aU: function (_v1) {
 			return $elm$core$Platform$Sub$none;
 		},
-		aU: $author$project$PhotoGroove$update,
-		aV: $author$project$PhotoGroove$view
+		aW: $author$project$PhotoGroove$update,
+		aX: $author$project$PhotoGroove$view
 	});
 _Platform_export({'PhotoGroove':{'init':$author$project$PhotoGroove$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));
