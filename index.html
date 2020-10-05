@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PhotoGroove</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="range-slider.css">
-  <script src="range-slider.js"></script>
+  <link rel="stylesheet" href="vendor/range-slider.css">
+  <script src="vendor/range-slider.js"></script>
   <script>
     class RangeSlider extends HTMLElement {
       connectedCallback() {
@@ -39,9 +39,14 @@
 
 <body>
   <div id="app"></div>
+  <script src="vendor/pasta.js"></script>
   <script src="app.js"></script>
   <script>
-    Elm.PhotoGroove.init({ node: document.getElementById("app") });
+    let app = Elm.PhotoGroove.init({ node: document.getElementById("app") });
+
+    app.ports.setFilters.subscribe(function (options) {
+      Pasta.apply(document.getElementById("main-canvas"), options);
+    });
   </script>
 </body>
 

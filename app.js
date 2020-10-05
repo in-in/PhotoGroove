@@ -6690,13 +6690,12 @@ var $author$project$PhotoGroove$SlideRipple = function (a) {
 	return {$: 6, a: a};
 };
 var $author$project$PhotoGroove$Small = 0;
-var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
 var $elm$html$Html$button = _VirtualDom_node('button');
+var $elm$html$Html$canvas = _VirtualDom_node('canvas');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$hr = _VirtualDom_node('hr');
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
-var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 0, a: a};
 };
@@ -6723,12 +6722,6 @@ var $author$project$PhotoGroove$sizeToClass = function (size) {
 		default:
 			return 'large';
 	}
-};
-var $elm$html$Html$Attributes$src = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'src',
-		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
 var $elm$html$Html$label = _VirtualDom_node('label');
 var $elm$html$Html$Attributes$max = $elm$html$Html$Attributes$stringProperty('max');
@@ -6844,6 +6837,7 @@ var $author$project$PhotoGroove$viewSizeChooser = function (size) {
 var $author$project$PhotoGroove$ClickedPhoto = function (a) {
 	return {$: 0, a: a};
 };
+var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
 var $elm$core$List$filter = F2(
 	function (isGood, list) {
 		return A3(
@@ -6868,6 +6862,13 @@ var $elm$html$Html$Attributes$classList = function (classes) {
 				$elm$core$List$map,
 				$elm$core$Tuple$first,
 				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
+};
+var $elm$html$Html$img = _VirtualDom_node('img');
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
 var $elm$html$Html$Attributes$title = $elm$html$Html$Attributes$stringProperty('title');
 var $author$project$PhotoGroove$viewThumbnail = F2(
@@ -6958,12 +6959,11 @@ var $author$project$PhotoGroove$viewLoaded = F3(
 					$author$project$PhotoGroove$viewThumbnail(selectedUrl),
 					photos)),
 				A2(
-				$elm$html$Html$img,
+				$elm$html$Html$canvas,
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$class('large'),
-						$elm$html$Html$Attributes$alt(''),
-						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('large/' + selectedUrl))
+						$elm$html$Html$Attributes$id('main-canvas')
 					]),
 				_List_Nil)
 			]);
