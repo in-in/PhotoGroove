@@ -6291,7 +6291,7 @@ var $author$project$PhotoGroove$Loaded = F2(
 	});
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $elm$json$Json$Encode$int = _Json_wrap;
+var $elm$json$Json$Encode$float = _Json_wrap;
 var $elm$json$Json$Encode$list = F2(
 	function (func, entries) {
 		return _Json_wrap(
@@ -6330,7 +6330,7 @@ var $author$project$PhotoGroove$setFilters = _Platform_outgoingPort(
 									[
 										_Utils_Tuple2(
 										'amount',
-										$elm$json$Json$Encode$int($.J)),
+										$elm$json$Json$Encode$float($.J)),
 										_Utils_Tuple2(
 										'name',
 										$elm$json$Json$Encode$string($.L))
@@ -6350,9 +6350,9 @@ var $author$project$PhotoGroove$applyFilters = function (model) {
 			var url = $author$project$PhotoGroove$urlPrefix + ('large/' + selectedUrl);
 			var filters = _List_fromArray(
 				[
-					{J: model.B, L: 'Hue'},
-					{J: model.E, L: 'Ripple'},
-					{J: model.D, L: 'Noise'}
+					{J: model.B / 11, L: 'Hue'},
+					{J: model.E / 11, L: 'Ripple'},
+					{J: model.D / 11, L: 'Noise'}
 				]);
 			return _Utils_Tuple2(
 				model,
@@ -6646,25 +6646,22 @@ var $author$project$PhotoGroove$update = F2(
 				}
 			case 5:
 				var hue = msg.a;
-				return _Utils_Tuple2(
+				return $author$project$PhotoGroove$applyFilters(
 					_Utils_update(
 						model,
-						{B: hue}),
-					$elm$core$Platform$Cmd$none);
+						{B: hue}));
 			case 6:
 				var ripple = msg.a;
-				return _Utils_Tuple2(
+				return $author$project$PhotoGroove$applyFilters(
 					_Utils_update(
 						model,
-						{E: ripple}),
-					$elm$core$Platform$Cmd$none);
+						{E: ripple}));
 			default:
 				var noise = msg.a;
-				return _Utils_Tuple2(
+				return $author$project$PhotoGroove$applyFilters(
 					_Utils_update(
 						model,
-						{D: noise}),
-					$elm$core$Platform$Cmd$none);
+						{D: noise}));
 		}
 	});
 var $elm$html$Html$Attributes$stringProperty = F2(
@@ -6723,6 +6720,7 @@ var $author$project$PhotoGroove$sizeToClass = function (size) {
 			return 'large';
 	}
 };
+var $elm$json$Json$Encode$int = _Json_wrap;
 var $elm$html$Html$label = _VirtualDom_node('label');
 var $elm$html$Html$Attributes$max = $elm$html$Html$Attributes$stringProperty('max');
 var $elm$json$Json$Decode$at = F2(
