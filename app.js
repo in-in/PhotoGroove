@@ -6463,6 +6463,15 @@ var $elm$random$Random$generate = F2(
 		return $elm$random$Random$command(
 			A2($elm$random$Random$map, tagger, generator));
 	});
+var $elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return $elm$core$Maybe$Just(x);
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
 var $elm$core$Tuple$pair = F2(
 	function (a, b) {
 		return _Utils_Tuple2(a, b);
@@ -6618,13 +6627,20 @@ var $author$project$PhotoGroove$update = F2(
 					if (photos.b) {
 						var first = photos.a;
 						var rest = photos.b;
-						return _Utils_Tuple2(
+						return $author$project$PhotoGroove$applyFilters(
 							_Utils_update(
 								model,
 								{
-									i: A2($author$project$PhotoGroove$Loaded, photos, first.m)
-								}),
-							$elm$core$Platform$Cmd$none);
+									i: function () {
+										var _v4 = $elm$core$List$head(photos);
+										if (!_v4.$) {
+											var photo = _v4.a;
+											return A2($author$project$PhotoGroove$Loaded, photos, photo.m);
+										} else {
+											return A2($author$project$PhotoGroove$Loaded, _List_Nil, '');
+										}
+									}()
+								}));
 					} else {
 						return _Utils_Tuple2(
 							_Utils_update(
