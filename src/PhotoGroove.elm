@@ -27,6 +27,7 @@ type Msg
     | ClickedSize ThumbnailSize
     | ClickedSurpriseMe
     | GotRandomPhoto Photo
+    | GotActivity String
     | GotPhotos (Result Http.Error (List Photo))
     | SlideHue Int
     | SlideRipple Int
@@ -54,6 +55,7 @@ viewLoaded photos selectedUrl model =
     , button
         [ onClick ClickedSurpriseMe ]
         [ text "Surprise Me!" ]
+    , div [ class "activity" ] [ text model.activity ]
     , div [ class "filters" ]
         [ viewFilter SlideHue "Hue" model.hue
         , viewFilter SlideRipple "Ripple" model.ripple
@@ -134,6 +136,9 @@ sizeToClass size =
 port setFilters : FilterOptions -> Cmd msg
 
 
+port activityChanges : (String -> msg) -> Sub msg
+
+
 type alias FilterOptions =
     { url : String
     , filters :
@@ -164,6 +169,7 @@ type Status
 
 type alias Model =
     { status : Status
+    , activity : String
     , chosenSize : ThumbnailSize
     , hue : Int
     , ripple : Int
@@ -174,6 +180,7 @@ type alias Model =
 initialModel : Model
 initialModel =
     { status = Loading
+    , activity = ""
     , chosenSize = Medium
     , hue = 5
     , ripple = 5
@@ -192,6 +199,9 @@ initialCmd =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        GotActivity activity ->
+            ( { model | activity = activity }, Cmd.none )
+
         ClickedPhoto url ->
             applyFilters { model | status = selectUrl url model.status }
 
@@ -289,8 +299,13 @@ main =
         { init = \_ -> ( initialModel, initialCmd )
         , view = view
         , update = update
-        , subscriptions = \_ -> Sub.none
+        , subscriptions = subscriptions
         }
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    activityChanges GotActivity
 
 
 rangeSlider : List (Attribute msg) -> List (Html msg) -> Html msg
