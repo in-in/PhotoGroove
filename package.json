@@ -4,6 +4,7 @@
   "scripts": {
     "start": "elm",
     "build": "elm make src/PhotoGroove.elm --optimize --output app.js",
+    "build2": "elm make src/PhotoFolders.elm --optimize --output app.js",
     "test": "elm-test"
   },
   "dependencies": {
