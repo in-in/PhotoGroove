@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.ap.P === region.az.P)
+	if (region.ap.S === region.az.S)
 	{
-		return 'on line ' + region.ap.P;
+		return 'on line ' + region.ap.S;
 	}
-	return 'on lines ' + region.ap.P + ' through ' + region.az.P;
+	return 'on lines ' + region.ap.S + ' through ' + region.az.S;
 }
 
 
@@ -3982,7 +3982,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.Z) && (_VirtualDom_doc.title = title = doc.Z);
+				(title !== doc.E) && (_VirtualDom_doc.title = title = doc.E);
 			});
 		}
 	);
@@ -4375,9 +4375,9 @@ var _Http_toTask = F3(function(router, toTask, request)
 		$elm$core$Maybe$isJust(request.a4) && _Http_track(router, xhr, request.a4.a);
 
 		try {
-			xhr.open(request.bt, request.K, true);
+			xhr.open(request.bt, request.J, true);
 		} catch (e) {
-			return done($elm$http$Http$BadUrl_(request.K));
+			return done($elm$http$Http$BadUrl_(request.J));
 		}
 
 		_Http_configureRequest(xhr, request);
@@ -4421,7 +4421,7 @@ function _Http_toResponse(toBody, xhr)
 function _Http_toMetadata(xhr)
 {
 	return {
-		K: xhr.responseURL,
+		J: xhr.responseURL,
 		bL: xhr.status,
 		bM: xhr.statusText,
 		aE: _Http_parseHeaders(xhr.getAllResponseHeaders())
@@ -4520,14 +4520,14 @@ function _Http_track(router, xhr, tracker)
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
 			bK: event.loaded,
-			W: event.total
+			D: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
 			bH: event.loaded,
-			W: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
+			D: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
 }var $elm$core$Basics$EQ = 1;
@@ -6074,7 +6074,7 @@ var $elm$http$Http$cmdMap = F2(
 					bt: r.bt,
 					bQ: r.bQ,
 					a4: r.a4,
-					K: r.K
+					J: r.J
 				});
 		}
 	});
@@ -6097,17 +6097,17 @@ var $elm$http$Http$subscription = _Platform_leaf('Http');
 var $elm$http$Http$request = function (r) {
 	return $elm$http$Http$command(
 		$elm$http$Http$Request(
-			{bb: false, bd: r.bd, bl: r.bl, aE: r.aE, bt: r.bt, bQ: r.bQ, a4: r.a4, K: r.K}));
+			{bb: false, bd: r.bd, bl: r.bl, aE: r.aE, bt: r.bt, bQ: r.bQ, a4: r.a4, J: r.J}));
 };
 var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
-		{bd: $elm$http$Http$emptyBody, bl: r.bl, aE: _List_Nil, bt: 'GET', bQ: $elm$core$Maybe$Nothing, a4: $elm$core$Maybe$Nothing, K: r.K});
+		{bd: $elm$http$Http$emptyBody, bl: r.bl, aE: _List_Nil, bt: 'GET', bQ: $elm$core$Maybe$Nothing, a4: $elm$core$Maybe$Nothing, J: r.J});
 };
 var $author$project$PhotoFolders$Folder = $elm$core$Basics$identity;
 var $author$project$PhotoFolders$initialModel = {
 	af: $elm$core$Dict$empty,
-	I: {q: true, w: 'Loading...', x: _List_Nil, s: _List_Nil},
-	V: $elm$core$Maybe$Nothing
+	M: {l: true, t: 'Loading...', w: _List_Nil, r: _List_Nil},
+	X: $elm$core$Maybe$Nothing
 };
 var $elm$core$Dict$fromList = function (assocs) {
 	return A3(
@@ -6129,67 +6129,67 @@ var $author$project$PhotoFolders$modelDecoder = $elm$json$Json$Decode$succeed(
 					_Utils_Tuple2(
 					'trevi',
 					{
-						T: _List_fromArray(
+						C: _List_fromArray(
 							['coli', 'fresco']),
-						W: 34,
-						Z: 'Trevi',
-						K: 'trevi'
+						D: 34,
+						E: 'Trevi',
+						J: 'trevi'
 					}),
 					_Utils_Tuple2(
 					'fresco',
 					{
-						T: _List_fromArray(
+						C: _List_fromArray(
 							['trevi']),
-						W: 46,
-						Z: 'Fresco',
-						K: 'fresco'
+						D: 46,
+						E: 'Fresco',
+						J: 'fresco'
 					}),
 					_Utils_Tuple2(
 					'coli',
 					{
-						T: _List_fromArray(
+						C: _List_fromArray(
 							['trevi', 'fresco']),
-						W: 36,
-						Z: 'Coliseum',
-						K: 'coli'
+						D: 36,
+						E: 'Coliseum',
+						J: 'coli'
 					})
 				])),
-		I: {
-			q: true,
-			w: 'Photos',
-			x: _List_Nil,
-			s: _List_fromArray(
+		M: {
+			l: true,
+			t: 'Photos',
+			w: _List_Nil,
+			r: _List_fromArray(
 				[
 					{
-					q: true,
-					w: '2016',
-					x: _List_fromArray(
+					l: true,
+					t: '2016',
+					w: _List_fromArray(
 						['trevi', 'coli']),
-					s: _List_fromArray(
+					r: _List_fromArray(
 						[
-							{q: true, w: 'outdoors', x: _List_Nil, s: _List_Nil},
+							{l: true, t: 'outdoors', w: _List_Nil, r: _List_Nil},
 							{
-							q: true,
-							w: 'indoors',
-							x: _List_fromArray(
+							l: true,
+							t: 'indoors',
+							w: _List_fromArray(
 								['fresco']),
-							s: _List_Nil
+							r: _List_Nil
 						}
 						])
 				},
 					{
-					q: true,
-					w: '2017',
-					x: _List_Nil,
-					s: _List_fromArray(
+					l: true,
+					t: '2017',
+					w: _List_Nil,
+					r: _List_fromArray(
 						[
-							{q: true, w: 'outdoors', x: _List_Nil, s: _List_Nil},
-							{q: true, w: 'indoors', x: _List_Nil, s: _List_Nil}
+							{l: true, t: 'outdoors', w: _List_Nil, r: _List_Nil},
+							{l: true, t: 'indoors', w: _List_Nil, r: _List_Nil}
 						])
 				}
 				])
 		},
-		V: $elm$core$Maybe$Just('trevi')
+		X: $elm$core$Maybe$Just('trevi')
 	});
 var $author$project$PhotoFolders$init = function (_v0) {
 	return _Utils_Tuple2(
@@ -6197,7 +6197,7 @@ var $author$project$PhotoFolders$init = function (_v0) {
 		$elm$http$Http$get(
 			{
 				bl: A2($elm$http$Http$expectJson, $author$project$PhotoFolders$GotInitialModel, $author$project$PhotoFolders$modelDecoder),
-				K: 'http://elm-in-action.com/folders/list'
+				J: 'http://elm-in-action.com/folders/list'
 			}));
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
@@ -6211,7 +6211,7 @@ var $author$project$PhotoFolders$toggleExpanded = F2(
 		if (!path.$) {
 			return _Utils_update(
 				folder,
-				{q: !folder.q});
+				{l: !folder.l});
 		} else {
 			var targetIndex = path.a;
 			var remainingPath = path.b;
@@ -6219,10 +6219,10 @@ var $author$project$PhotoFolders$toggleExpanded = F2(
 				function (currentIndex, currentSubfolder) {
 					return _Utils_eq(currentIndex, targetIndex) ? A2($author$project$PhotoFolders$toggleExpanded, remainingPath, currentSubfolder) : currentSubfolder;
 				});
-			var subfolders = A2($elm$core$List$indexedMap, transform, folder.s);
+			var subfolders = A2($elm$core$List$indexedMap, transform, folder.r);
 			return _Utils_update(
 				folder,
-				{s: subfolders});
+				{r: subfolders});
 		}
 	});
 var $author$project$PhotoFolders$update = F2(
@@ -6234,7 +6234,7 @@ var $author$project$PhotoFolders$update = F2(
 					_Utils_update(
 						model,
 						{
-							I: A2($author$project$PhotoFolders$toggleExpanded, path, model.I)
+							M: A2($author$project$PhotoFolders$toggleExpanded, path, model.M)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 0:
@@ -6243,7 +6243,7 @@ var $author$project$PhotoFolders$update = F2(
 					_Utils_update(
 						model,
 						{
-							V: $elm$core$Maybe$Just(url)
+							X: $elm$core$Maybe$Just(url)
 						}),
 					$elm$core$Platform$Cmd$none);
 			default:
@@ -6360,13 +6360,13 @@ var $author$project$PhotoFolders$viewFolder = F2(
 				]),
 			_List_fromArray(
 				[
-					$elm$html$Html$text(folder.w)
+					$elm$html$Html$text(folder.t)
 				]));
-		if (folder.q) {
+		if (folder.l) {
 			var contents = A2(
 				$elm$core$List$append,
-				A2($elm$core$List$indexedMap, viewSubfolder, folder.s),
-				A2($elm$core$List$map, $author$project$PhotoFolders$viewPhoto, folder.x));
+				A2($elm$core$List$indexedMap, viewSubfolder, folder.r),
+				A2($elm$core$List$map, $author$project$PhotoFolders$viewPhoto, folder.w));
 			return A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -6432,13 +6432,13 @@ var $author$project$PhotoFolders$viewSelectedPhoto = function (photo) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text(photo.Z)
+						$elm$html$Html$text(photo.E)
 					])),
 				A2(
 				$elm$html$Html$img,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('photos/' + (photo.K + '/full')))
+						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('photos/' + (photo.J + '/full')))
 					]),
 				_List_Nil),
 				A2(
@@ -6447,7 +6447,7 @@ var $author$project$PhotoFolders$viewSelectedPhoto = function (photo) {
 				_List_fromArray(
 					[
 						$elm$html$Html$text(
-						$elm$core$String$fromInt(photo.W) + 'KB')
+						$elm$core$String$fromInt(photo.D) + 'KB')
 					])),
 				A2(
 				$elm$html$Html$h3,
@@ -6462,7 +6462,7 @@ var $author$project$PhotoFolders$viewSelectedPhoto = function (photo) {
 					[
 						$elm$html$Html$Attributes$class('related-photos')
 					]),
-				A2($elm$core$List$map, $author$project$PhotoFolders$viewRelatedPhoto, photo.T))
+				A2($elm$core$List$map, $author$project$PhotoFolders$viewRelatedPhoto, photo.C))
 			]));
 };
 var $author$project$PhotoFolders$view = function (model) {
@@ -6470,7 +6470,7 @@ var $author$project$PhotoFolders$view = function (model) {
 		return A2($elm$core$Dict$get, url, model.af);
 	};
 	var selectedPhoto = function () {
-		var _v0 = A2($elm$core$Maybe$andThen, photoByUrl, model.V);
+		var _v0 = A2($elm$core$Maybe$andThen, photoByUrl, model.X);
 		if (!_v0.$) {
 			var photo = _v0.a;
 			return $author$project$PhotoFolders$viewSelectedPhoto(photo);
@@ -6501,7 +6501,7 @@ var $author$project$PhotoFolders$view = function (model) {
 							[
 								$elm$html$Html$text('Folders')
 							])),
-						A2($author$project$PhotoFolders$viewFolder, $author$project$PhotoFolders$End, model.I)
+						A2($author$project$PhotoFolders$viewFolder, $author$project$PhotoFolders$End, model.M)
 					])),
 				A2(
 				$elm$html$Html$div,
