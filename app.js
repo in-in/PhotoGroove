@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.ap.S === region.az.S)
+	if (region.ap.L === region.az.L)
 	{
-		return 'on line ' + region.ap.S;
+		return 'on line ' + region.ap.L;
 	}
-	return 'on lines ' + region.ap.S + ' through ' + region.az.S;
+	return 'on lines ' + region.ap.L + ' through ' + region.az.L;
 }
 
 
@@ -2704,7 +2704,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		A: func(record.A),
+		w: func(record.w),
 		aq: record.aq,
 		an: record.an
 	}
@@ -2974,7 +2974,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.A;
+		var message = !tag ? value : tag < 3 ? value.a : value.w;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.aq;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -3982,7 +3982,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.E) && (_VirtualDom_doc.title = title = doc.E);
+				(title !== doc.W) && (_VirtualDom_doc.title = title = doc.W);
 			});
 		}
 	);
@@ -4375,9 +4375,9 @@ var _Http_toTask = F3(function(router, toTask, request)
 		$elm$core$Maybe$isJust(request.a4) && _Http_track(router, xhr, request.a4.a);
 
 		try {
-			xhr.open(request.bt, request.J, true);
+			xhr.open(request.bt, request.ae, true);
 		} catch (e) {
-			return done($elm$http$Http$BadUrl_(request.J));
+			return done($elm$http$Http$BadUrl_(request.ae));
 		}
 
 		_Http_configureRequest(xhr, request);
@@ -4421,7 +4421,7 @@ function _Http_toResponse(toBody, xhr)
 function _Http_toMetadata(xhr)
 {
 	return {
-		J: xhr.responseURL,
+		ae: xhr.responseURL,
 		bL: xhr.status,
 		bM: xhr.statusText,
 		aE: _Http_parseHeaders(xhr.getAllResponseHeaders())
@@ -4520,14 +4520,14 @@ function _Http_track(router, xhr, tracker)
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
 			bK: event.loaded,
-			D: event.total
+			S: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
 			bH: event.loaded,
-			D: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
+			S: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
 }var $elm$core$Basics$EQ = 1;
@@ -6074,7 +6074,7 @@ var $elm$http$Http$cmdMap = F2(
 					bt: r.bt,
 					bQ: r.bQ,
 					a4: r.a4,
-					J: r.J
+					ae: r.ae
 				});
 		}
 	});
@@ -6097,17 +6097,41 @@ var $elm$http$Http$subscription = _Platform_leaf('Http');
 var $elm$http$Http$request = function (r) {
 	return $elm$http$Http$command(
 		$elm$http$Http$Request(
-			{bb: false, bd: r.bd, bl: r.bl, aE: r.aE, bt: r.bt, bQ: r.bQ, a4: r.a4, J: r.J}));
+			{bb: false, bd: r.bd, bl: r.bl, aE: r.aE, bt: r.bt, bQ: r.bQ, a4: r.a4, ae: r.ae}));
 };
 var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
-		{bd: $elm$http$Http$emptyBody, bl: r.bl, aE: _List_Nil, bt: 'GET', bQ: $elm$core$Maybe$Nothing, a4: $elm$core$Maybe$Nothing, J: r.J});
+		{bd: $elm$http$Http$emptyBody, bl: r.bl, aE: _List_Nil, bt: 'GET', bQ: $elm$core$Maybe$Nothing, a4: $elm$core$Maybe$Nothing, ae: r.ae});
 };
 var $author$project$PhotoFolders$Folder = $elm$core$Basics$identity;
 var $author$project$PhotoFolders$initialModel = {
-	af: $elm$core$Dict$empty,
-	M: {l: true, t: 'Loading...', w: _List_Nil, r: _List_Nil},
-	X: $elm$core$Maybe$Nothing
+	ac: $elm$core$Dict$empty,
+	E: {J: true, aj: 'Loading...', am: _List_Nil, T: _List_Nil},
+	R: $elm$core$Maybe$Nothing
+};
+var $author$project$PhotoFolders$folderFromJson = F3(
+	function (name, photos, subfolders) {
+		return {
+			J: true,
+			aj: name,
+			am: $elm$core$Dict$keys(photos),
+			T: subfolders
+		};
+	});
+var $elm$json$Json$Decode$andThen = _Json_andThen;
+var $elm$json$Json$Decode$lazy = function (thunk) {
+	return A2(
+		$elm$json$Json$Decode$andThen,
+		thunk,
+		$elm$json$Json$Decode$succeed(0));
+};
+var $elm$json$Json$Decode$list = _Json_decodeList;
+var $author$project$PhotoFolders$finishPhoto = function (_v0) {
+	var url = _v0.a;
+	var json = _v0.b;
+	return _Utils_Tuple2(
+		url,
+		{P: json.P, S: json.S, W: json.W, ae: url});
 };
 var $elm$core$Dict$fromList = function (assocs) {
 	return A3(
@@ -6121,83 +6145,134 @@ var $elm$core$Dict$fromList = function (assocs) {
 		$elm$core$Dict$empty,
 		assocs);
 };
-var $author$project$PhotoFolders$modelDecoder = $elm$json$Json$Decode$succeed(
-	{
-		af: $elm$core$Dict$fromList(
-			_List_fromArray(
-				[
-					_Utils_Tuple2(
-					'trevi',
-					{
-						C: _List_fromArray(
-							['coli', 'fresco']),
-						D: 34,
-						E: 'Trevi',
-						J: 'trevi'
-					}),
-					_Utils_Tuple2(
-					'fresco',
-					{
-						C: _List_fromArray(
-							['trevi']),
-						D: 46,
-						E: 'Fresco',
-						J: 'fresco'
-					}),
-					_Utils_Tuple2(
-					'coli',
-					{
-						C: _List_fromArray(
-							['trevi', 'fresco']),
-						D: 36,
-						E: 'Coliseum',
-						J: 'coli'
-					})
-				])),
-		M: {
-			l: true,
-			t: 'Photos',
-			w: _List_Nil,
-			r: _List_fromArray(
-				[
-					{
-					l: true,
-					t: '2016',
-					w: _List_fromArray(
-						['trevi', 'coli']),
-					r: _List_fromArray(
-						[
-							{l: true, t: 'outdoors', w: _List_Nil, r: _List_Nil},
-							{
-							l: true,
-							t: 'indoors',
-							w: _List_fromArray(
-								['fresco']),
-							r: _List_Nil
-						}
-						])
-				},
-					{
-					l: true,
-					t: '2017',
-					w: _List_Nil,
-					r: _List_fromArray(
-						[
-							{l: true, t: 'outdoors', w: _List_Nil, r: _List_Nil},
-							{l: true, t: 'indoors', w: _List_Nil, r: _List_Nil}
-						])
-				}
-				])
-		},
-		X: $elm$core$Maybe$Just('trevi')
+var $author$project$PhotoFolders$fromPairs = function (pairs) {
+	return $elm$core$Dict$fromList(
+		A2($elm$core$List$map, $author$project$PhotoFolders$finishPhoto, pairs));
+};
+var $author$project$PhotoFolders$JsonPhoto = F3(
+	function (title, size, relatedUrls) {
+		return {P: relatedUrls, S: size, W: title};
 	});
+var $elm$json$Json$Decode$int = _Json_decodeInt;
+var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = $elm$json$Json$Decode$map2($elm$core$Basics$apR);
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
+	function (key, valDecoder, decoder) {
+		return A2(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A2($elm$json$Json$Decode$field, key, valDecoder),
+			decoder);
+	});
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$PhotoFolders$jsonPhotoDecoder = A3(
+	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+	'related_photos',
+	$elm$json$Json$Decode$list($elm$json$Json$Decode$string),
+	A3(
+		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'size',
+		$elm$json$Json$Decode$int,
+		A3(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'title',
+			$elm$json$Json$Decode$string,
+			$elm$json$Json$Decode$succeed($author$project$PhotoFolders$JsonPhoto))));
+var $elm$json$Json$Decode$keyValuePairs = _Json_decodeKeyValuePairs;
+var $author$project$PhotoFolders$photosDecoder = A2(
+	$elm$json$Json$Decode$map,
+	$author$project$PhotoFolders$fromPairs,
+	$elm$json$Json$Decode$keyValuePairs($author$project$PhotoFolders$jsonPhotoDecoder));
+function $author$project$PhotoFolders$cyclic$folderDecoder() {
+	return A3(
+		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'subfolders',
+		$elm$json$Json$Decode$lazy(
+			function (_v0) {
+				return $elm$json$Json$Decode$list(
+					$author$project$PhotoFolders$cyclic$folderDecoder());
+			}),
+		A3(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'photos',
+			$author$project$PhotoFolders$photosDecoder,
+			A3(
+				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+				'name',
+				$elm$json$Json$Decode$string,
+				$elm$json$Json$Decode$succeed($author$project$PhotoFolders$folderFromJson))));
+}
+var $author$project$PhotoFolders$folderDecoder = $author$project$PhotoFolders$cyclic$folderDecoder();
+$author$project$PhotoFolders$cyclic$folderDecoder = function () {
+	return $author$project$PhotoFolders$folderDecoder;
+};
+var $elm$core$Dict$foldl = F3(
+	function (func, acc, dict) {
+		foldl:
+		while (true) {
+			if (dict.$ === -2) {
+				return acc;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var $temp$func = func,
+					$temp$acc = A3(
+					func,
+					key,
+					value,
+					A3($elm$core$Dict$foldl, func, acc, left)),
+					$temp$dict = right;
+				func = $temp$func;
+				acc = $temp$acc;
+				dict = $temp$dict;
+				continue foldl;
+			}
+		}
+	});
+var $elm$core$Dict$union = F2(
+	function (t1, t2) {
+		return A3($elm$core$Dict$foldl, $elm$core$Dict$insert, t2, t1);
+	});
+var $author$project$PhotoFolders$modelPhotosFromJson = F2(
+	function (folderPhotos, subfolderPhotos) {
+		return A3($elm$core$List$foldl, $elm$core$Dict$union, folderPhotos, subfolderPhotos);
+	});
+function $author$project$PhotoFolders$cyclic$modelPhotosDecoder() {
+	return A3(
+		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'subfolders',
+		$elm$json$Json$Decode$lazy(
+			function (_v0) {
+				return $elm$json$Json$Decode$list(
+					$author$project$PhotoFolders$cyclic$modelPhotosDecoder());
+			}),
+		A3(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'photos',
+			$author$project$PhotoFolders$photosDecoder,
+			$elm$json$Json$Decode$succeed($author$project$PhotoFolders$modelPhotosFromJson)));
+}
+var $author$project$PhotoFolders$modelPhotosDecoder = $author$project$PhotoFolders$cyclic$modelPhotosDecoder();
+$author$project$PhotoFolders$cyclic$modelPhotosDecoder = function () {
+	return $author$project$PhotoFolders$modelPhotosDecoder;
+};
+var $author$project$PhotoFolders$modelDecoder = A3(
+	$elm$json$Json$Decode$map2,
+	F2(
+		function (photos, root) {
+			return {ac: photos, E: root, R: $elm$core$Maybe$Nothing};
+		}),
+	$author$project$PhotoFolders$modelPhotosDecoder,
+	$author$project$PhotoFolders$folderDecoder);
+var $author$project$PhotoGroove$urlPrefix = 'https://elm-in-action.com/';
 var $author$project$PhotoFolders$init = function (_v0) {
 	return _Utils_Tuple2(
 		$author$project$PhotoFolders$initialModel,
 		$elm$http$Http$get(
 			{
 				bl: A2($elm$http$Http$expectJson, $author$project$PhotoFolders$GotInitialModel, $author$project$PhotoFolders$modelDecoder),
-				J: 'http://elm-in-action.com/folders/list'
+				ae: $author$project$PhotoGroove$urlPrefix + 'folders/list'
 			}));
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
@@ -6211,7 +6286,7 @@ var $author$project$PhotoFolders$toggleExpanded = F2(
 		if (!path.$) {
 			return _Utils_update(
 				folder,
-				{l: !folder.l});
+				{J: !folder.J});
 		} else {
 			var targetIndex = path.a;
 			var remainingPath = path.b;
@@ -6219,10 +6294,10 @@ var $author$project$PhotoFolders$toggleExpanded = F2(
 				function (currentIndex, currentSubfolder) {
 					return _Utils_eq(currentIndex, targetIndex) ? A2($author$project$PhotoFolders$toggleExpanded, remainingPath, currentSubfolder) : currentSubfolder;
 				});
-			var subfolders = A2($elm$core$List$indexedMap, transform, folder.r);
+			var subfolders = A2($elm$core$List$indexedMap, transform, folder.T);
 			return _Utils_update(
 				folder,
-				{r: subfolders});
+				{T: subfolders});
 		}
 	});
 var $author$project$PhotoFolders$update = F2(
@@ -6234,7 +6309,7 @@ var $author$project$PhotoFolders$update = F2(
 					_Utils_update(
 						model,
 						{
-							M: A2($author$project$PhotoFolders$toggleExpanded, path, model.M)
+							E: A2($author$project$PhotoFolders$toggleExpanded, path, model.E)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 0:
@@ -6243,7 +6318,7 @@ var $author$project$PhotoFolders$update = F2(
 					_Utils_update(
 						model,
 						{
-							X: $elm$core$Maybe$Just(url)
+							R: $elm$core$Maybe$Just(url)
 						}),
 					$elm$core$Platform$Cmd$none);
 			default:
@@ -6360,13 +6435,13 @@ var $author$project$PhotoFolders$viewFolder = F2(
 				]),
 			_List_fromArray(
 				[
-					$elm$html$Html$text(folder.t)
+					$elm$html$Html$text(folder.aj)
 				]));
-		if (folder.l) {
+		if (folder.J) {
 			var contents = A2(
 				$elm$core$List$append,
-				A2($elm$core$List$indexedMap, viewSubfolder, folder.r),
-				A2($elm$core$List$map, $author$project$PhotoFolders$viewPhoto, folder.w));
+				A2($elm$core$List$indexedMap, viewSubfolder, folder.T),
+				A2($elm$core$List$map, $author$project$PhotoFolders$viewPhoto, folder.am));
 			return A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -6405,7 +6480,6 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $author$project$PhotoGroove$urlPrefix = 'https://elm-in-action.com/';
 var $author$project$PhotoFolders$viewRelatedPhoto = function (url) {
 	return A2(
 		$elm$html$Html$img,
@@ -6432,13 +6506,13 @@ var $author$project$PhotoFolders$viewSelectedPhoto = function (photo) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text(photo.E)
+						$elm$html$Html$text(photo.W)
 					])),
 				A2(
 				$elm$html$Html$img,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('photos/' + (photo.J + '/full')))
+						$elm$html$Html$Attributes$src($author$project$PhotoGroove$urlPrefix + ('photos/' + (photo.ae + '/full')))
 					]),
 				_List_Nil),
 				A2(
@@ -6447,7 +6521,7 @@ var $author$project$PhotoFolders$viewSelectedPhoto = function (photo) {
 				_List_fromArray(
 					[
 						$elm$html$Html$text(
-						$elm$core$String$fromInt(photo.D) + 'KB')
+						$elm$core$String$fromInt(photo.S) + 'KB')
 					])),
 				A2(
 				$elm$html$Html$h3,
@@ -6462,15 +6536,15 @@ var $author$project$PhotoFolders$viewSelectedPhoto = function (photo) {
 					[
 						$elm$html$Html$Attributes$class('related-photos')
 					]),
-				A2($elm$core$List$map, $author$project$PhotoFolders$viewRelatedPhoto, photo.C))
+				A2($elm$core$List$map, $author$project$PhotoFolders$viewRelatedPhoto, photo.P))
 			]));
 };
 var $author$project$PhotoFolders$view = function (model) {
 	var photoByUrl = function (url) {
-		return A2($elm$core$Dict$get, url, model.af);
+		return A2($elm$core$Dict$get, url, model.ac);
 	};
 	var selectedPhoto = function () {
-		var _v0 = A2($elm$core$Maybe$andThen, photoByUrl, model.X);
+		var _v0 = A2($elm$core$Maybe$andThen, photoByUrl, model.R);
 		if (!_v0.$) {
 			var photo = _v0.a;
 			return $author$project$PhotoFolders$viewSelectedPhoto(photo);
@@ -6501,7 +6575,7 @@ var $author$project$PhotoFolders$view = function (model) {
 							[
 								$elm$html$Html$text('Folders')
 							])),
-						A2($author$project$PhotoFolders$viewFolder, $author$project$PhotoFolders$End, model.M)
+						A2($author$project$PhotoFolders$viewFolder, $author$project$PhotoFolders$End, model.E)
 					])),
 				A2(
 				$elm$html$Html$div,
