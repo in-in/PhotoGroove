@@ -5,10 +5,6 @@ import Html exposing (Html, a, footer, h1, header, li, nav, text, ul)
 import Html.Attributes exposing (classList, href)
 
 
-
--- Rendering the header and footer
-
-
 type alias Model =
     { page : Page }
 
@@ -51,7 +47,7 @@ viewHeader page =
             li [ classList [ ( "active", page == targetPage ) ] ]
                 [ a [ href url ] [ text caption ] ]
     in
-    nav [] [ logo, links ]
+    header [] [ nav [] [ logo, links ] ]
 
 
 viewFooter : Html msg

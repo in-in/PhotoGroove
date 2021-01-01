@@ -5197,6 +5197,7 @@ var $elm$html$Html$Attributes$classList = function (classes) {
 				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
 };
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$header = _VirtualDom_node('header');
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
@@ -5259,10 +5260,16 @@ var $author$project$Main$viewHeader = function (page) {
 				{Q: 'Gallery', ad: '/gallery'})
 			]));
 	return A2(
-		$elm$html$Html$nav,
+		$elm$html$Html$header,
 		_List_Nil,
 		_List_fromArray(
-			[logo, links]));
+			[
+				A2(
+				$elm$html$Html$nav,
+				_List_Nil,
+				_List_fromArray(
+					[logo, links]))
+			]));
 };
 var $author$project$Main$view = function (model) {
 	var content = $elm$html$Html$text('This isn\'t even my final form!');
