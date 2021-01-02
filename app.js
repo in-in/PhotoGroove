@@ -5150,6 +5150,8 @@ var $author$project$Main$update = F2(
 	function (msg, model) {
 		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 	});
+var $elm$virtual_dom$VirtualDom$lazy = _VirtualDom_lazy;
+var $elm$html$Html$Lazy$lazy = $elm$virtual_dom$VirtualDom$lazy;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$html$Html$footer = _VirtualDom_node('footer');
@@ -5276,7 +5278,7 @@ var $author$project$Main$view = function (model) {
 	return {
 		a$: _List_fromArray(
 			[
-				$author$project$Main$viewHeader(model.X),
+				A2($elm$html$Html$Lazy$lazy, $author$project$Main$viewHeader, model.X),
 				content,
 				$author$project$Main$viewFooter
 			]),
