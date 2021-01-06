@@ -15,7 +15,7 @@ import Fuzz exposing (Fuzzer, int, string)
 import Html.Attributes as Attr
 import Json.Decode exposing (decodeValue)
 import Json.Encode as Encode
-import PhotoGroove exposing (Model, Msg(..), Photo, Status(..), initialModel, update, urlPrefix, view)
+import PhotoGallery exposing (Model, Msg(..), Photo, Status(..), initialModel, photoDecoder, update, urlPrefix, view)
 import Test exposing (Test, describe, fuzz, fuzz2, fuzz3)
 import Test.Html.Event as Event
 import Test.Html.Query as Query
@@ -30,7 +30,7 @@ decoderTest =
             , ( "size", Encode.int size )
             ]
                 |> Encode.object
-                |> decodeValue PhotoGroove.photoDecoder
+                |> decodeValue photoDecoder
                 |> Result.map .title
                 |> Expect.equal (Ok "(untitled)")
 

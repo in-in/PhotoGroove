@@ -5,8 +5,14 @@ import Browser.Navigation as Nav
 import Html exposing (Html, a, footer, h1, header, li, nav, text, ul)
 import Html.Attributes exposing (classList, href)
 import Html.Lazy exposing (lazy)
+import PhotoFolders as Folders
+import PhotoGallery as Gallery
 import Url exposing (Url)
 import Url.Parser as Parser exposing ((</>), Parser, s, string)
+
+
+
+-- Delegating pages
 
 
 type alias Model =

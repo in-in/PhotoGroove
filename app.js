@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.aa.H === region.al.H)
+	if (region.aq.M === region.aB.M)
 	{
-		return 'on line ' + region.aa.H;
+		return 'on line ' + region.aq.M;
 	}
-	return 'on lines ' + region.aa.H + ' through ' + region.al.H;
+	return 'on lines ' + region.aq.M + ' through ' + region.aB.M;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.be,
-		impl.bF,
-		impl.bA,
+		impl.bu,
+		impl.bU,
+		impl.bP,
 		function() { return function() {} }
 	);
 });
@@ -2704,9 +2704,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		v: func(record.v),
-		ab: record.ab,
-		Z: record.Z
+		w: func(record.w),
+		ar: record.ar,
+		ao: record.ao
 	}
 });
 
@@ -2974,11 +2974,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.v;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.ab;
+		var message = !tag ? value : tag < 3 ? value.a : value.w;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.ar;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.Z) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.ao) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3928,11 +3928,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.be,
-		impl.bF,
-		impl.bA,
+		impl.bu,
+		impl.bU,
+		impl.bP,
 		function(sendToApp, initialModel) {
-			var view = impl.bG;
+			var view = impl.bV;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3964,12 +3964,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.be,
-		impl.bF,
-		impl.bA,
+		impl.bu,
+		impl.bU,
+		impl.bP,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl._ && impl._(sendToApp)
-			var view = impl.bG;
+			var divertHrefToApp = impl.ap && impl.ap(sendToApp)
+			var view = impl.bV;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3977,12 +3977,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.a0);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.bf);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.bE) && (_VirtualDom_doc.title = title = doc.bE);
+				(title !== doc.bT) && (_VirtualDom_doc.title = title = doc.bT);
 			});
 		}
 	);
@@ -4038,12 +4038,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.bq;
-	var onUrlRequest = impl.br;
+	var onUrlChange = impl.bF;
+	var onUrlRequest = impl.bG;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		_: function(sendToApp)
+		ap: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.aE === next.aE
-							&& curr.as === next.as
-							&& curr.aB.a === next.aB.a
+							&& curr.aU === next.aU
+							&& curr.aI === next.aI
+							&& curr.aR.a === next.aR.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4069,13 +4069,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		be: function(flags)
+		bu: function(flags)
 		{
-			return A3(impl.be, flags, _Browser_getUrl(), key);
+			return A3(impl.bu, flags, _Browser_getUrl(), key);
 		},
-		bG: impl.bG,
-		bF: impl.bF,
-		bA: impl.bA
+		bV: impl.bV,
+		bU: impl.bU,
+		bP: impl.bP
 	});
 }
 
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { bc: 'hidden', a2: 'visibilitychange' }
+		? { bs: 'hidden', bh: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { bc: 'mozHidden', a2: 'mozvisibilitychange' }
+		? { bs: 'mozHidden', bh: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { bc: 'msHidden', a2: 'msvisibilitychange' }
+		? { bs: 'msHidden', bh: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { bc: 'webkitHidden', a2: 'webkitvisibilitychange' }
-		: { bc: 'hidden', a2: 'visibilitychange' };
+		? { bs: 'webkitHidden', bh: 'webkitvisibilitychange' }
+		: { bs: 'hidden', bh: 'visibilitychange' };
 }
 
 
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		aM: _Browser_getScene(),
-		aU: {
-			aW: _Browser_window.pageXOffset,
-			aX: _Browser_window.pageYOffset,
-			aV: _Browser_doc.documentElement.clientWidth,
-			ar: _Browser_doc.documentElement.clientHeight
+		a0: _Browser_getScene(),
+		a7: {
+			a9: _Browser_window.pageXOffset,
+			ba: _Browser_window.pageYOffset,
+			a8: _Browser_doc.documentElement.clientWidth,
+			aH: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4247,8 +4247,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		aV: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		ar: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		a8: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		aH: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			aM: {
-				aV: node.scrollWidth,
-				ar: node.scrollHeight
+			a0: {
+				a8: node.scrollWidth,
+				aH: node.scrollHeight
 			},
-			aU: {
-				aW: node.scrollLeft,
-				aX: node.scrollTop,
-				aV: node.clientWidth,
-				ar: node.clientHeight
+			a7: {
+				a9: node.scrollLeft,
+				ba: node.scrollTop,
+				a8: node.clientWidth,
+				aH: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			aM: _Browser_getScene(),
-			aU: {
-				aW: x,
-				aX: y,
-				aV: _Browser_doc.documentElement.clientWidth,
-				ar: _Browser_doc.documentElement.clientHeight
+			a0: _Browser_getScene(),
+			a7: {
+				a9: x,
+				ba: y,
+				a8: _Browser_doc.documentElement.clientWidth,
+				aH: _Browser_doc.documentElement.clientHeight
 			},
-			a6: {
-				aW: x + rect.left,
-				aX: y + rect.top,
-				aV: rect.width,
-				ar: rect.height
+			bl: {
+				a9: x + rect.left,
+				ba: y + rect.top,
+				a8: rect.width,
+				aH: rect.height
 			}
 		};
 	});
@@ -4882,7 +4882,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {an: fragment, as: host, az: path, aB: port_, aE: protocol, aF: query};
+		return {aD: fragment, aI: host, aP: path, aR: port_, aU: protocol, aV: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5166,7 +5166,7 @@ var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$NotFound = {$: 3};
 var $elm$url$Url$Parser$State = F5(
 	function (visited, unvisited, params, frag, value) {
-		return {y: frag, z: params, x: unvisited, t: value, B: visited};
+		return {z: frag, A: params, y: unvisited, u: value, C: visited};
 	});
 var $elm$url$Url$Parser$getFirstMatch = function (states) {
 	getFirstMatch:
@@ -5176,12 +5176,12 @@ var $elm$url$Url$Parser$getFirstMatch = function (states) {
 		} else {
 			var state = states.a;
 			var rest = states.b;
-			var _v1 = state.x;
+			var _v1 = state.y;
 			if (!_v1.b) {
-				return $elm$core$Maybe$Just(state.t);
+				return $elm$core$Maybe$Just(state.u);
 			} else {
 				if ((_v1.a === '') && (!_v1.b.b)) {
-					return $elm$core$Maybe$Just(state.t);
+					return $elm$core$Maybe$Just(state.u);
 				} else {
 					var $temp$states = rest;
 					states = $temp$states;
@@ -5793,9 +5793,9 @@ var $elm$url$Url$Parser$parse = F2(
 				A5(
 					$elm$url$Url$Parser$State,
 					_List_Nil,
-					$elm$url$Url$Parser$preparePath(url.az),
-					$elm$url$Url$Parser$prepareQuery(url.aF),
-					url.an,
+					$elm$url$Url$Parser$preparePath(url.aP),
+					$elm$url$Url$Parser$prepareQuery(url.aV),
+					url.aD,
 					$elm$core$Basics$identity)));
 	});
 var $author$project$Main$Folders = {$: 2};
@@ -5806,11 +5806,11 @@ var $author$project$Main$SelectedPhoto = function (a) {
 var $elm$url$Url$Parser$Parser = $elm$core$Basics$identity;
 var $elm$url$Url$Parser$mapState = F2(
 	function (func, _v0) {
-		var visited = _v0.B;
-		var unvisited = _v0.x;
-		var params = _v0.z;
-		var frag = _v0.y;
-		var value = _v0.t;
+		var visited = _v0.C;
+		var unvisited = _v0.y;
+		var params = _v0.A;
+		var frag = _v0.z;
+		var value = _v0.u;
 		return A5(
 			$elm$url$Url$Parser$State,
 			visited,
@@ -5823,11 +5823,11 @@ var $elm$url$Url$Parser$map = F2(
 	function (subValue, _v0) {
 		var parseArg = _v0;
 		return function (_v1) {
-			var visited = _v1.B;
-			var unvisited = _v1.x;
-			var params = _v1.z;
-			var frag = _v1.y;
-			var value = _v1.t;
+			var visited = _v1.C;
+			var unvisited = _v1.y;
+			var params = _v1.A;
+			var frag = _v1.z;
+			var value = _v1.u;
 			return A2(
 				$elm$core$List$map,
 				$elm$url$Url$Parser$mapState(value),
@@ -5864,11 +5864,11 @@ var $elm$url$Url$Parser$oneOf = function (parsers) {
 };
 var $elm$url$Url$Parser$s = function (str) {
 	return function (_v0) {
-		var visited = _v0.B;
-		var unvisited = _v0.x;
-		var params = _v0.z;
-		var frag = _v0.y;
-		var value = _v0.t;
+		var visited = _v0.C;
+		var unvisited = _v0.y;
+		var params = _v0.A;
+		var frag = _v0.z;
+		var value = _v0.u;
 		if (!unvisited.b) {
 			return _List_Nil;
 		} else {
@@ -5901,11 +5901,11 @@ var $elm$url$Url$Parser$slash = F2(
 var $elm$url$Url$Parser$custom = F2(
 	function (tipe, stringToSomething) {
 		return function (_v0) {
-			var visited = _v0.B;
-			var unvisited = _v0.x;
-			var params = _v0.z;
-			var frag = _v0.y;
-			var value = _v0.t;
+			var visited = _v0.C;
+			var unvisited = _v0.y;
+			var params = _v0.A;
+			var frag = _v0.z;
+			var value = _v0.u;
 			if (!unvisited.b) {
 				return _List_Nil;
 			} else {
@@ -5970,8 +5970,8 @@ var $author$project$Main$init = F3(
 	function (flags, url, key) {
 		return _Utils_Tuple2(
 			{
-				V: key,
-				D: $author$project$Main$urlToPage(url)
+				ai: key,
+				E: $author$project$Main$urlToPage(url)
 			},
 			$elm$core$Platform$Cmd$none);
 	});
@@ -6004,7 +6004,7 @@ var $elm$url$Url$addPrefixed = F3(
 	});
 var $elm$url$Url$toString = function (url) {
 	var http = function () {
-		var _v0 = url.aE;
+		var _v0 = url.aU;
 		if (!_v0) {
 			return 'http://';
 		} else {
@@ -6014,17 +6014,17 @@ var $elm$url$Url$toString = function (url) {
 	return A3(
 		$elm$url$Url$addPrefixed,
 		'#',
-		url.an,
+		url.aD,
 		A3(
 			$elm$url$Url$addPrefixed,
 			'?',
-			url.aF,
+			url.aV,
 			_Utils_ap(
 				A2(
 					$elm$url$Url$addPort,
-					url.aB,
-					_Utils_ap(http, url.as)),
-				url.az)));
+					url.aR,
+					_Utils_ap(http, url.aI)),
+				url.aP)));
 };
 var $author$project$Main$update = F2(
 	function (msg, model) {
@@ -6041,7 +6041,7 @@ var $author$project$Main$update = F2(
 					model,
 					A2(
 						$elm$browser$Browser$Navigation$pushUrl,
-						model.V,
+						model.ai,
 						$elm$url$Url$toString(url)));
 			}
 		} else {
@@ -6050,7 +6050,7 @@ var $author$project$Main$update = F2(
 				_Utils_update(
 					model,
 					{
-						D: $author$project$Main$urlToPage(url)
+						E: $author$project$Main$urlToPage(url)
 					}),
 				$elm$core$Platform$Cmd$none);
 		}
@@ -6111,8 +6111,8 @@ var $elm$html$Html$Attributes$href = function (url) {
 		_VirtualDom_noJavaScriptUri(url));
 };
 var $author$project$Main$isActive = function (_v0) {
-	var link = _v0.av;
-	var page = _v0.D;
+	var link = _v0.aL;
+	var page = _v0.E;
 	var _v1 = _Utils_Tuple2(link, page);
 	switch (_v1.a.$) {
 		case 1:
@@ -6150,8 +6150,8 @@ var $elm$html$Html$ul = _VirtualDom_node('ul');
 var $author$project$Main$viewHeader = function (page) {
 	var navLink = F2(
 		function (targetPage, _v0) {
-			var url = _v0.ae;
-			var caption = _v0.R;
+			var url = _v0.au;
+			var caption = _v0.ae;
 			return A2(
 				$elm$html$Html$li,
 				_List_fromArray(
@@ -6162,7 +6162,7 @@ var $author$project$Main$viewHeader = function (page) {
 								_Utils_Tuple2(
 								'active',
 								$author$project$Main$isActive(
-									{av: targetPage, D: page}))
+									{aL: targetPage, E: page}))
 							]))
 					]),
 				_List_fromArray(
@@ -6194,11 +6194,11 @@ var $author$project$Main$viewHeader = function (page) {
 				A2(
 				navLink,
 				$author$project$Main$Folders,
-				{R: 'Folders', ae: '/'}),
+				{ae: 'Folders', au: '/'}),
 				A2(
 				navLink,
 				$author$project$Main$Gallery,
-				{R: 'Gallery', ae: '/gallery'})
+				{ae: 'Gallery', au: '/gallery'})
 			]));
 	return A2(
 		$elm$html$Html$header,
@@ -6215,16 +6215,16 @@ var $author$project$Main$viewHeader = function (page) {
 var $author$project$Main$view = function (model) {
 	var content = $elm$html$Html$text('This isn\'t even my final form!');
 	return {
-		a0: _List_fromArray(
+		bf: _List_fromArray(
 			[
-				A2($elm$html$Html$Lazy$lazy, $author$project$Main$viewHeader, model.D),
+				A2($elm$html$Html$Lazy$lazy, $author$project$Main$viewHeader, model.E),
 				content,
 				$author$project$Main$viewFooter
 			]),
-		bE: 'Photo Groove'
+		bT: 'Photo Groove'
 	};
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
-	{be: $author$project$Main$init, bq: $author$project$Main$ChangedUrl, br: $author$project$Main$ClickedLink, bA: $author$project$Main$subscriptions, bF: $author$project$Main$update, bG: $author$project$Main$view});
+	{bu: $author$project$Main$init, bF: $author$project$Main$ChangedUrl, bG: $author$project$Main$ClickedLink, bP: $author$project$Main$subscriptions, bU: $author$project$Main$update, bV: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));
