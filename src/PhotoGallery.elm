@@ -3,6 +3,7 @@ port module PhotoGallery exposing
     , Msg(..)
     , Photo
     , Status(..)
+    , init
     , initialModel
     , photoDecoder
     , subscriptions

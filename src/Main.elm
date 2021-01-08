@@ -1,6 +1,6 @@
 module Main exposing (main)
 
-import Browser exposing (Document, application)
+import Browser exposing (Document)
 import Browser.Navigation as Nav
 import Html exposing (Html, a, footer, h1, header, li, nav, text, ul)
 import Html.Attributes exposing (classList, href)
@@ -12,7 +12,10 @@ import Url.Parser as Parser exposing ((</>), Parser, s, string)
 
 
 type alias Model =
-    { page : Page, key : Nav.Key, version : Float }
+    { page : Page
+    , key : Nav.Key
+    , version : Float
+    }
 
 
 type Page
@@ -66,7 +69,10 @@ viewHeader page =
 
         navLink : Route -> { url : String, caption : String } -> Html msg
         navLink route { url, caption } =
-            li [ classList [ ( "active", isActive { link = route, page = page } ) ] ]
+            li
+                [ classList
+                    [ ( "active", isActive { link = route, page = page } ) ]
+                ]
                 [ a [ href url ] [ text caption ] ]
     in
     header [] [ nav [] [ logo, links ] ]
@@ -94,8 +100,7 @@ isActive { link, page } =
 viewFooter : Html msg
 viewFooter =
     footer []
-        [ text "One is never alone with a rubber duck. -Douglas Adams"
-        ]
+        [ text "One is never alone with a rubber duck. -Douglas Adams" ]
 
 
 type Msg
@@ -123,6 +128,14 @@ update msg model =
             case model.page of
                 FoldersPage folders ->
                     toFolders model (Folders.update foldersMsg folders)
+
+                _ ->
+                    ( model, Cmd.none )
+
+        GotGalleryMsg galleryMsg ->
+            case model.page of
+                GalleryPage gallery ->
+                    toGallery model (Gallery.update galleryMsg gallery)
 
                 _ ->
                     ( model, Cmd.none )
@@ -175,20 +188,6 @@ updateUrl url model =
 
         Nothing ->
             ( { model | page = NotFound }, Cmd.none )
-
-
-
--- urlToPage : Float -> Url -> Page
--- urlToPage version url =
---     case Parser.parse parser url of
---         Just Gallery ->
---             GalleryPage (Tuple.first (Gallery.init version))
---         Just Folders ->
---             FoldersPage (Tuple.first (Folders.init Nothing))
---         Just SelectedPhoto filename ->
---             FoldersPage (Tuple.first (Folders.init (Just filename)))
---         Nothing ->
---             NotFound
 
 
 parser : Parser (Route -> a) a
