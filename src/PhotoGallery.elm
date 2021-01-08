@@ -1,4 +1,15 @@
-port module PhotoGallery exposing (Model, Msg(..), Photo, Status(..), initialModel, photoDecoder, update, urlPrefix, view)
+port module PhotoGallery exposing
+    ( Model
+    , Msg(..)
+    , Photo
+    , Status(..)
+    , initialModel
+    , photoDecoder
+    , subscriptions
+    , update
+    , urlPrefix
+    , view
+    )
 
 import Browser
 import Html exposing (..)
@@ -50,8 +61,7 @@ view model =
 
 viewLoaded : List Photo -> String -> Model -> List (Html Msg)
 viewLoaded photos selectedUrl model =
-    [ h1 [] [ text "Photo Groove" ]
-    , hr [] []
+    [ hr [] []
     , button
         [ onClick ClickedSurpriseMe ]
         [ text "Surprise Me!" ]
