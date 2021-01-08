@@ -14,7 +14,18 @@ port module PhotoGallery exposing
 
 import Browser
 import Html exposing (..)
-import Html.Attributes as Attr exposing (alt, class, classList, id, name, src, title, type_)
+import Html.Attributes as Attr
+    exposing
+        ( alt
+        , checked
+        , class
+        , classList
+        , id
+        , name
+        , src
+        , title
+        , type_
+        )
 import Html.Events exposing (on, onClick)
 import Http
 import Json.Decode exposing (Decoder, at, int, list, string, succeed)
@@ -73,7 +84,7 @@ viewLoaded photos selectedUrl model =
         , viewFilter SlideNoise "Noise" model.noise
         ]
     , h3 [] [ text "Thumbnail Size:" ]
-    , div [ id "choose-size" ] (List.map viewSizeChooser [ Small, Medium, Large ])
+    , div [ id "choose-size" ] (List.map (viewSizeChooser model.chosenSize) [ Small, Medium, Large ])
     , div [ id "thumbnails", class (sizeToClass model.chosenSize) ]
         (List.map (viewThumbnail selectedUrl) photos)
     , canvas
@@ -96,10 +107,16 @@ viewThumbnail selectedUrl thumb =
         []
 
 
-viewSizeChooser : ThumbnailSize -> Html Msg
-viewSizeChooser size =
+viewSizeChooser : ThumbnailSize -> ThumbnailSize -> Html Msg
+viewSizeChooser defaultSize size =
     label []
-        [ input [ type_ "radio", name "size", onClick (ClickedSize size) ] []
+        [ input
+            [ type_ "radio"
+            , name "size"
+            , checked (size == defaultSize)
+            , onClick (ClickedSize size)
+            ]
+            []
         , text (sizeToString size)
         ]
 
